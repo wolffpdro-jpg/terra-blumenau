@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "TERRA / BLUMENAU · Terreno de 10.361 m² na Rua 1º de Janeiro, 2.650",
+  title: "Terreno em Blumenau · Terreno de 10.361 m² na Rua 1º de Janeiro, 2.650",
   description:
     "Terreno de 10.361,46 m² em Blumenau/SC (Bairro Fidélis), esquina com Rua Frieda Beck, a 220 m da Rodovia Federal BR-470. Zoneamento ZI-1 e ZOC, 100% livre de enchente. Atendimento exclusivo: Robert Wolff (CRECI 2758).",
   openGraph: {
-    title: "TERRA / BLUMENAU · 10.361,46 m² · Investidores & Incorporadoras",
+    title: "Terreno em Blumenau · 10.361,46 m² · Investidores & Incorporadoras",
     description:
       "Terreno estratégico na Rua 1º de Janeiro, nº 2.650 esq. Rua Frieda Beck, Blumenau/SC. Conexão imediata com a BR-470, zoneamento ZI-1 & ZOC, livre de enchente.",
     images: ["/media/vista-aerea-br470.jpg"],

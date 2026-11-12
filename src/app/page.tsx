@@ -171,7 +171,7 @@ export default function TerraBlumenauPage() {
             <div className="w-2.5 h-2.5 bg-[#C59B6D] rotate-45 group-hover:rotate-90 transition-transform duration-500" />
             <div>
               <span className="font-serif text-lg sm:text-2xl tracking-[0.18em] text-[#F7F5F0] block leading-none">
-                TERRA <span className="text-[#C59B6D]">/</span> BLUMENAU
+                TERRENO EM BLUMENAU
               </span>
               <span className="text-[10px] sm:text-[11px] tracking-wider text-[#E6DFD3]/70 block mt-1">
                 Rua 1º de Janeiro, 2.650 · 10.361 m²
@@ -1218,7 +1218,7 @@ export default function TerraBlumenauPage() {
             <RWLogo className="h-12" variant="bronze" />
             <div>
               <div className="font-serif text-xl text-[#F7F5F0] tracking-widest">
-                TERRA / BLUMENAU
+                TERRENO EM BLUMENAU
               </div>
               <div className="text-xs text-[#E6DFD3]/75 mt-0.5">
                 {PROPERTY_SUMMARY.address} · {PROPERTY_SUMMARY.neighborhood} ·{" "}

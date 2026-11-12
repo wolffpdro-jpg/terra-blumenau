@@ -308,7 +308,7 @@ export default function InteractiveMap() {
             box-shadow: 0 6px 16px rgba(0,0,0,0.5);
           ">
             <span style="display: block; font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase; color: #C59B6D; font-weight: 700; line-height: 1.2;">
-              TERRA / BLUMENAU
+              TERRENO EM BLUMENAU
             </span>
             <span style="display: block; font-size: 12px; font-weight: 700; color: #FFFFFF; line-height: 1.25; margin-top: 1px;">
               10.361,46 m²

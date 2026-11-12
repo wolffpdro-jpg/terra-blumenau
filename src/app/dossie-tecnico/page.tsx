@@ -69,7 +69,7 @@ export default function DossieTecnicoPage() {
                 Memorando Técnico Confidencial · Investidores & Incorporadoras
               </div>
               <h1 className="font-serif text-4xl md:text-5xl tracking-tight mt-4 text-[#F7F5F0]">
-                TERRA / BLUMENAU
+                TERRENO EM BLUMENAU
               </h1>
               <p className="text-lg text-[#E6DFD3]/90 mt-2 font-light max-w-2xl">
                 Dossiê Registral, Cadastral, Topográfico e Condicionantes Técnicos da
@@ -312,7 +312,7 @@ export default function DossieTecnicoPage() {
               </div>
             </div>
             <div className="font-mono text-[10px] uppercase tracking-wider text-[#8C6239] text-right">
-              TERRA / BLUMENAU · {TECHNICAL_DOSSIER_DATA.documentCode}
+              TERRENO EM BLUMENAU · {TECHNICAL_DOSSIER_DATA.documentCode}
             </div>
           </footer>
         </div>

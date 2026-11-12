@@ -36,13 +36,13 @@ export const BROKER_DATA = {
   email: "rrwimoveis@gmail.com",
   location: "Blumenau, Santa Catarina",
   whatsappUrl:
-    "https://wa.me/5547988891211?text=Ol%C3%A1%20Robert%2C%20acessei%20o%20portal%20TERRA%20%2F%20BLUMENAU%20(Rua%201%C2%BA%20de%20Janeiro%2C%202650)%20e%20gostaria%20de%20solicitar%20o%20Dossi%C3%AA%20T%C3%A9cnico%20e%20informa%C3%A7%C3%B5es%20comerciais.",
+    "https://wa.me/5547988891211?text=Ol%C3%A1%20Robert%2C%20acessei%20o%20portal%20Terreno%20em%20Blumenau%20(Rua%201%C2%BA%20de%20Janeiro%2C%202650)%20e%20gostaria%20de%20solicitar%20o%20Dossi%C3%AA%20T%C3%A9cnico%20e%20informa%C3%A7%C3%B5es%20comerciais.",
   dossierWhatsappUrl:
     "https://wa.me/5547988891211?text=Ol%C3%A1%20Robert%2C%20gostaria%20de%20solicitar%20o%20Dossi%C3%AA%20T%C3%A9cnico%20Completo%20(Matr%C3%ADcula%20e%20Condicionantes%20T%C3%A9cnicas)%20do%20terreno%20na%20Rua%201%C2%BA%20de%20Janeiro%2C%202650.",
 };
 
 export const PROPERTY_SUMMARY = {
-  conceptTitle: "TERRA / BLUMENAU",
+  conceptTitle: "Terreno em Blumenau",
   subtitle: "Ativo Territorial para Incorporação, Logística & Operações Corporativas",
   address: "Rua 1º de Janeiro, nº 2.650",
   secondaryFrontage: "Esquina com Rua Frieda Beck",
@@ -461,7 +461,7 @@ export const PERIMETER_SEGMENTS_TABLE = [
  * Never mentions any subdivision/desmembramento proposal.
  */
 export const TECHNICAL_DOSSIER_DATA = {
-  documentCode: "DOSSIÊ EXECUTIVO · TERRA-BNU-2650",
+  documentCode: "DOSSIÊ EXECUTIVO · BNU-2650",
   updatedAt: "Novembro 2026",
   registry: {
     matricula: "Matrícula nº 14.093 — 3º Ofício de Registro de Imóveis de Blumenau/SC",
