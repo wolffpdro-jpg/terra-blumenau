@@ -47,15 +47,6 @@ export default function DossieTecnicoPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <a
-              href="/docs/579_PLANTA_PLANIALT_WOLFF_A2_V1.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-mono uppercase tracking-wider border border-[#C59B6D]/50 text-[#E6DFD3] hover:bg-[#C59B6D]/15 transition"
-            >
-              <Download className="w-3.5 h-3.5 text-[#C59B6D]" />
-              <span>Baixar Planta A2 (PDF)</span>
-            </a>
             <button
               type="button"
               onClick={handlePrint}

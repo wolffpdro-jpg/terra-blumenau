@@ -18,7 +18,7 @@ export interface BoundarySegment {
 export interface MapPOI {
   id: string;
   name: string;
-  category: "acesso" | "logistica" | "servico-publico" | "infraestrutura";
+  category: "acesso" | "mercado" | "comercio" | "educacao" | "logistica";
   categoryLabel: string;
   lat: number;
   lng: number;
@@ -55,9 +55,9 @@ export const PROPERTY_SUMMARY = {
   approximateHeadlineArea: "10.000 m²",
   priceStatus: "Sob Consulta",
   centerCoordinates: {
-    lat: -26.857203,
-    lng: -49.075768,
-    dms: "26°51'25.9\"S 49°04'32.8\"W",
+    lat: -26.85724,
+    lng: -49.07572,
+    dms: "26°51'26.1\"S 49°04'32.6\"W",
     utmZone: "22S (SIRGAS 2000)",
     utmCenter: "E 691.175 m · N 7.027.930 m",
   },
@@ -114,147 +114,319 @@ export const PROPERTY_SUMMARY = {
 
 /**
  * Exact georeferenced vertices of the 10.361,46 m² property polygon
- * Converted from UTM Zone 22S (SIRGAS 2000 / WGS84) survey 579_PLANTA_PLANIALT_WOLFF_A2_V1.pdf
+ * Extracted directly from the AutoCAD vector stream of 579_PLANTA_PLANIALT_WOLFF_A2_V1.pdf (SIRGAS 2000 / UTM 22S)
  */
 export const PROPERTY_POLYGON_VERTICES: Coordinate[] = [
-  { lat: -26.856582, lng: -49.076318, utmE: 691121.5, utmN: 7027999.5, label: "V1 · R. 1º de Janeiro (Início Chanfro)" },
-  { lat: -26.856521, lng: -49.076236, utmE: 691129.8, utmN: 7028006.1, label: "V2 · Esquina R. Frieda Beck (10,63m)" },
-  { lat: -26.856600, lng: -49.075918, utmE: 691161.2, utmN: 7027996.8, label: "V3 · R. Frieda Beck (32,74m)" },
-  { lat: -26.856695, lng: -49.075683, utmE: 691184.4, utmN: 7027985.8, label: "V4 · R. Frieda Beck (25,65m)" },
-  { lat: -26.856973, lng: -49.075851, utmE: 691167.2, utmN: 7027955.3, label: "V5 · Divisa Ewaldo Mund Oeste (35,00m)" },
-  { lat: -26.857103, lng: -49.075586, utmE: 691193.3, utmN: 7027940.5, label: "V6 · Divisa Ewaldo Mund Sul (30,00m)" },
-  { lat: -26.856825, lng: -49.075418, utmE: 691210.5, utmN: 7027971.0, label: "V7 · Retorno R. Frieda Beck (35,00m)" },
-  { lat: -26.856871, lng: -49.075343, utmE: 691217.9, utmN: 7027965.7, label: "V8 · R. Frieda Beck (9,12m)" },
-  { lat: -26.856931, lng: -49.075275, utmE: 691224.5, utmN: 7027958.9, label: "V9 · R. Frieda Beck (9,48m)" },
-  { lat: -26.857015, lng: -49.075216, utmE: 691230.2, utmN: 7027949.5, label: "V10 · R. Frieda Beck (10,98m)" },
-  { lat: -26.857085, lng: -49.075184, utmE: 691233.3, utmN: 7027941.7, label: "V11 · R. Frieda Beck (8,41m)" },
-  { lat: -26.857203, lng: -49.075150, utmE: 691236.4, utmN: 7027928.6, label: "V12 · R. Frieda Beck (13,46m)" },
-  { lat: -26.857328, lng: -49.075123, utmE: 691238.9, utmN: 7027914.7, label: "V13 · R. Frieda Beck (14,07m)" },
-  { lat: -26.857452, lng: -49.075096, utmE: 691241.3, utmN: 7027900.9, label: "V14 · R. Frieda Beck (14,04m)" },
-  { lat: -26.857563, lng: -49.075069, utmE: 691243.8, utmN: 7027888.6, label: "V15 · R. Frieda Beck (12,51m)" },
-  { lat: -26.857674, lng: -49.075032, utmE: 691247.3, utmN: 7027876.2, label: "V16 · R. Frieda Beck (12,92m)" },
-  { lat: -26.857762, lng: -49.074981, utmE: 691252.2, utmN: 7027866.4, label: "V17 · R. Frieda Beck (10,93m)" },
-  { lat: -26.857795, lng: -49.074928, utmE: 691257.4, utmN: 7027862.6, label: "V18 · Extremo Sudeste R. Frieda Beck (6,41m)" },
-  { lat: -26.857701, lng: -49.075965, utmE: 691154.5, utmN: 7027874.8, label: "V19 · Divisa Sul JE Comércio (103,64m)" },
-  { lat: -26.857220, lng: -49.075795, utmE: 691172.3, utmN: 7027927.8, label: "V20 · Divisa Ademir Goldacker Leste (55,94m)" },
-  { lat: -26.857172, lng: -49.076382, utmE: 691114.1, utmN: 7027934.2, label: "V21 · Divisa Ademir Goldacker Norte (58,59m)" },
-  { lat: -26.856990, lng: -49.076356, utmE: 691117.0, utmN: 7027954.3, label: "V22 · R. 1º de Janeiro (20,29m)" },
+  { lat: -26.856627, lng: -49.076316, utmE: 691121.52, utmN: 7027994.68, label: "P1 · R. 1º de Janeiro (Início Esquina)" },
+  { lat: -26.856589, lng: -49.076295, utmE: 691123.71, utmN: 7027998.87, label: "P2 · Curva de Esquina (Chanfro 10,63m)" },
+  { lat: -26.856578, lng: -49.076240, utmE: 691129.16, utmN: 7027999.98, label: "P3 · Esquina R. Frieda Beck" },
+  { lat: -26.856649, lng: -49.075920, utmE: 691160.84, utmN: 7027991.65, label: "P4 · R. Frieda Beck (32,74m)" },
+  { lat: -26.856729, lng: -49.075678, utmE: 691184.78, utmN: 7027982.43, label: "P5 · R. Frieda Beck (25,65m)" },
+  { lat: -26.856995, lng: -49.075868, utmE: 691165.43, utmN: 7027953.27, label: "P6 · Recorte Ewaldo Mund Oeste (35,00m)" },
+  { lat: -26.857106, lng: -49.075593, utmE: 691192.57, utmN: 7027940.52, label: "P7 · Recorte Ewaldo Mund Sul (30,00m)" },
+  { lat: -26.856838, lng: -49.075406, utmE: 691211.59, utmN: 7027969.90, label: "P8 · Retorno R. Frieda Beck (35,00m)" },
+  { lat: -26.856889, lng: -49.075333, utmE: 691218.72, utmN: 7027964.21, label: "P9 · R. Frieda Beck (9,12m)" },
+  { lat: -26.856954, lng: -49.075272, utmE: 691224.74, utmN: 7027956.89, label: "P10 · R. Frieda Beck (9,48m)" },
+  { lat: -26.857043, lng: -49.075224, utmE: 691229.33, utmN: 7027946.92, label: "P11 · R. Frieda Beck (10,98m)" },
+  { lat: -26.857115, lng: -49.075197, utmE: 691231.91, utmN: 7027938.90, label: "P12 · R. Frieda Beck (8,41m)" },
+  { lat: -26.857233, lng: -49.075162, utmE: 691235.14, utmN: 7027925.82, label: "P13 · R. Frieda Beck (13,46m)" },
+  { lat: -26.857357, lng: -49.075135, utmE: 691237.70, utmN: 7027911.99, label: "P14 · R. Frieda Beck (14,07m)" },
+  { lat: -26.857482, lng: -49.075111, utmE: 691239.82, utmN: 7027898.12, label: "P15 · R. Frieda Beck (14,04m)" },
+  { lat: -26.857593, lng: -49.075086, utmE: 691242.14, utmN: 7027885.82, label: "P16 · R. Frieda Beck (12,51m)" },
+  { lat: -26.857702, lng: -49.075041, utmE: 691246.38, utmN: 7027873.61, label: "P17 · R. Frieda Beck (12,92m)" },
+  { lat: -26.857787, lng: -49.074984, utmE: 691251.93, utmN: 7027864.21, label: "P18 · R. Frieda Beck (10,93m)" },
+  { lat: -26.857822, lng: -49.074933, utmE: 691256.94, utmN: 7027860.18, label: "P19 · Extremo Sudeste R. Frieda Beck (6,41m)" },
+  { lat: -26.857759, lng: -49.075974, utmE: 691153.65, utmN: 7027868.72, label: "P20 · Divisa Sul JE Comércio (103,64m)" },
+  { lat: -26.857280, lng: -49.075796, utmE: 691172.13, utmN: 7027921.52, label: "P21 · Divisa Ademir Goldacker Leste (55,94m)" },
+  { lat: -26.857233, lng: -49.076386, utmE: 691113.55, utmN: 7027927.66, label: "P22 · Divisa Ademir Goldacker Norte (58,59m)" },
+  { lat: -26.857052, lng: -49.076352, utmE: 691117.24, utmN: 7027947.60, label: "P23 · R. 1º de Janeiro (20,29m)" },
+];
+
+/**
+ * Exact 220m route along Rua 1º de Janeiro from the property frontage to the BR-470 (Rod. Ingo Hering) interchange
+ */
+export const BR470_ROUTE_COORDS: [number, number][] = [
+  [-26.857233, -49.076386],
+  [-26.857253, -49.076512],
+  [-26.857479, -49.076599],
+  [-26.857778, -49.076747],
+  [-26.858372, -49.077034],
+  [-26.858823, -49.077266],
+  [-26.859226, -49.077568],
+  [-26.859411, -49.077283],
 ];
 
 /**
  * Zoning sub-polygons for interactive map overlay (ZI-1 West/South vs ZOC Central/East)
  */
 export const ZONING_ZI1_POLYGON: [number, number][] = [
-  [-26.856582, -49.076318],
-  [-26.856521, -49.076236],
-  [-26.856575, -49.076020],
-  [-26.857195, -49.076060],
-  [-26.857220, -49.075795],
-  [-26.857701, -49.075965],
-  [-26.857765, -49.075350],
-  [-26.857795, -49.074928],
-  [-26.857701, -49.075965],
-  [-26.857220, -49.075795],
-  [-26.857172, -49.076382],
-  [-26.856990, -49.076356],
+  [-26.856627, -49.076316],
+  [-26.856578, -49.076240],
+  [-26.856625, -49.076020],
+  [-26.857250, -49.076050],
+  [-26.857280, -49.075796],
+  [-26.857759, -49.075974],
+  [-26.857795, -49.075380],
+  [-26.857822, -49.074933],
+  [-26.857759, -49.075974],
+  [-26.857280, -49.075796],
+  [-26.857233, -49.076386],
+  [-26.857052, -49.076352],
 ];
 
+/**
+ * Verified Real-World POIs around Rua 1º de Janeiro, 2650 (Fidélis / Itoupava Norte / Fortaleza / Salto do Norte)
+ * Coordinates verified via OpenStreetMap building centroids.
+ */
 export const MAP_POIS: MapPOI[] = [
+  // Acessos & Logística
+  {
+    id: "trevo-br470",
+    name: "Trevo & Marginal BR-470 (Rod. Ingo Hering)",
+    category: "acesso",
+    categoryLabel: "Acesso Rodoviário",
+    lat: -26.859411,
+    lng: -49.077283,
+    distance: "220 m ao sul",
+    travelTime: "1 min",
+    description:
+      "Ligação direta pela Rua 1º de Janeiro até a marginal e o trevo da BR-470 (Rodovia Ingo Hering), principal corredor logístico do Vale do Itajaí.",
+  },
   {
     id: "acesso-principal",
     name: "Frente Principal · Rua 1º de Janeiro, 2.650",
     category: "acesso",
-    categoryLabel: "Ponto de Acesso",
-    lat: -26.85678,
-    lng: -49.07634,
-    distance: "Testada 67,58 m",
+    categoryLabel: "Testada Principal",
+    lat: -26.856840,
+    lng: -49.076335,
+    distance: "67,58 m de frente",
     travelTime: "Acesso imediato",
     description:
-      "Via arterial pavimentada (gabarito de 24 m no trecho), com ligação direta de 220 m até a marginal e o trevo da Rodovia Federal BR-470.",
+      "Via arterial pavimentada (gabarito de 24 m), ligando o imóvel diretamente à BR-470 (220 m ao sul) e ao corredor comercial da Itoupava Norte / Fortaleza.",
   },
   {
     id: "acesso-frieda-beck",
     name: "Frente Secundária · Rua Frieda Beck",
     category: "acesso",
-    categoryLabel: "Ponto de Acesso",
-    lat: -26.85662,
-    lng: -49.07595,
-    distance: "Testada 180,72 m",
-    travelTime: "Esquina + lateral leste",
+    categoryLabel: "Testada Secundária",
+    lat: -26.856649,
+    lng: -49.075920,
+    distance: "180,72 m de frente",
+    travelTime: "Esquina + lateral",
     description:
-      "Segunda frente oficial que contorna o setor norte e leste da gleba, viabilizando acessos independentes de carga, serviço ou portaria.",
+      "Segunda frente oficial que contorna o setor norte e leste do terreno, permitindo separar acessos de moradores, clientes ou docas de serviço.",
+  },
+
+  // Supermercados & Atacadistas próximos
+  {
+    id: "brasil-atacadista",
+    name: "Brasil Atacadista (Rio Branco / BR-470)",
+    category: "mercado",
+    categoryLabel: "Supermercado & Atacado",
+    lat: -26.854295,
+    lng: -49.085471,
+    distance: "1,0 km",
+    travelTime: "2 min",
+    description:
+      "Grande atacarejo e centro de compras diárias situado a apenas 1 km do terreno, junto ao eixo da BR-470.",
   },
   {
-    id: "trevo-br470",
-    name: "Trevo & Marginal Rodovia BR-470",
-    category: "logistica",
-    categoryLabel: "Eixo Logístico",
-    lat: -26.85465,
-    lng: -49.07615,
-    distance: "220 m ao norte",
-    travelTime: "1 min",
+    id: "supermercado-vansuit",
+    name: "Supermercado Vansuit (R. 1º de Janeiro)",
+    category: "mercado",
+    categoryLabel: "Supermercado",
+    lat: -26.867711,
+    lng: -49.070937,
+    distance: "1,2 km",
+    travelTime: "2 min",
     description:
-      "Conexão direta com o principal corredor logístico do Vale do Itajaí (BR-470), ligando rapidamente à BR-101, portos de Itajaí/Navegantes e interior de SC.",
+      "Supermercado de vizinhança localizado no próprio eixo da Rua 1º de Janeiro, atendendo o cotidiano residencial e comercial.",
+  },
+  {
+    id: "fort-atacadista-norte",
+    name: "Fort Atacadista (Itoupava Norte / BR-470)",
+    category: "mercado",
+    categoryLabel: "Supermercado & Atacado",
+    lat: -26.862137,
+    lng: -49.087042,
+    distance: "1,3 km",
+    travelTime: "3 min",
+    description:
+      "Unidade do Fort Atacadista às margens da BR-470 na Itoupava Norte, a 3 minutos do imóvel.",
+  },
+  {
+    id: "cooper-mafisa",
+    name: "Cooper Super Mafisa (Itoupava Norte)",
+    category: "mercado",
+    categoryLabel: "Supermercado & Serviços",
+    lat: -26.861976,
+    lng: -49.088923,
+    distance: "1,4 km",
+    travelTime: "3 min",
+    description:
+      "Unidade da Cooper (Cooperativa Mafisa) com supermercado completo, farmácia e lojas de apoio na região norte.",
+  },
+  {
+    id: "atacadao-br470",
+    name: "Atacadão (BR-470)",
+    category: "mercado",
+    categoryLabel: "Supermercado & Atacado",
+    lat: -26.863933,
+    lng: -49.089980,
+    distance: "1,6 km",
+    travelTime: "3 min",
+    description:
+      "Centro de abastecimento e atacarejo junto ao polo comercial do Norte Shopping na BR-470.",
+  },
+  {
+    id: "rede-top-fortaleza",
+    name: "Rede Top Supermercados (Fortaleza)",
+    category: "mercado",
+    categoryLabel: "Supermercado",
+    lat: -26.872231,
+    lng: -49.061951,
+    distance: "2,1 km",
+    travelTime: "4 min",
+    description:
+      "Supermercado completo no coração comercial do bairro Fortaleza.",
+  },
+
+  // Shoppings & Centros Comerciais
+  {
+    id: "park-itoupava",
+    name: "Park Itoupava (Centro Comercial)",
+    category: "comercio",
+    categoryLabel: "Centro Comercial",
+    lat: -26.855134,
+    lng: -49.086911,
+    distance: "1,1 km",
+    travelTime: "2 min",
+    description:
+      "Centro comercial e de serviços próximo ao trevo da BR-470, com gastronomia, comércio e conveniências.",
+  },
+  {
+    id: "norte-shopping",
+    name: "Blumenau Norte Shopping",
+    category: "comercio",
+    categoryLabel: "Shopping Center",
+    lat: -26.863733,
+    lng: -49.092081,
+    distance: "1,8 km",
+    travelTime: "3 min",
+    description:
+      "Principal shopping center da zona norte de Blumenau, com âncoras nacionais, cinema, bancos, praça de alimentação e serviços.",
+  },
+  {
+    id: "centro-comercial-fortaleza",
+    name: "Centro Comercial Fortaleza",
+    category: "comercio",
+    categoryLabel: "Centro Comercial",
+    lat: -26.880657,
+    lng: -49.068706,
+    distance: "2,7 km",
+    travelTime: "5 min",
+    description:
+      "Polo de comércio, agências bancárias, clínicas e serviços urbanos na Rua Francisco Vahldieck (Fortaleza).",
+  },
+  {
+    id: "shopping-park-europeu",
+    name: "Shopping Park Europeu (Via Expressa)",
+    category: "comercio",
+    categoryLabel: "Shopping Center",
+    lat: -26.886682,
+    lng: -49.068455,
+    distance: "3,3 km",
+    travelTime: "6 min",
+    description:
+      "Grande shopping center na Via Expressa (Rua 2 de Setembro / Fortaleza), com rápido deslocamento a partir da Rua 1º de Janeiro.",
+  },
+
+  // Faculdades, Universidades & Saúde
+  {
+    id: "uniasselvi-campus1",
+    name: "Uniasselvi — Campus I (BR-470)",
+    category: "educacao",
+    categoryLabel: "Faculdade & Ensino Superior",
+    lat: -26.865554,
+    lng: -49.087093,
+    distance: "1,4 km",
+    travelTime: "3 min",
+    description:
+      "Sede universitária da Uniasselvi às margens da BR-470, gerando forte demanda estudantil, residencial e de serviços no entorno imediato.",
+  },
+  {
+    id: "furb-campus5-hospital",
+    name: "FURB — Campus 5 & Hospital Universitário",
+    category: "educacao",
+    categoryLabel: "Universidade & Hospital",
+    lat: -26.856604,
+    lng: -49.054253,
+    distance: "2,1 km",
+    travelTime: "4 min",
+    description:
+      "Campus da saúde da FURB e Hospital Universitário na Fortaleza Alta, a poucos minutos do imóvel.",
+  },
+  {
+    id: "ufsc-blumenau",
+    name: "UFSC — Universidade Federal (Campus Blumenau)",
+    category: "educacao",
+    categoryLabel: "Universidade Federal",
+    lat: -26.872489,
+    lng: -49.094740,
+    distance: "2,5 km",
+    travelTime: "5 min",
+    description:
+      "Campus das Engenharias e Ciências Exatas da UFSC na Rua João Pessoa / Salto do Norte.",
+  },
+  {
+    id: "furb-campus2",
+    name: "FURB — Campus 2 (Complexo Tecnológico)",
+    category: "educacao",
+    categoryLabel: "Universidade & Inovação",
+    lat: -26.891006,
+    lng: -49.084290,
+    distance: "3,8 km",
+    travelTime: "7 min",
+    description:
+      "Centro Tecnológico e de Engenharias da FURB e Instituto Gene de Inovação na Rua São Paulo.",
+  },
+
+  // Terminais & Infraestrutura Regional
+  {
+    id: "terminal-aterro",
+    name: "Terminal Urbano Aterro",
+    category: "logistica",
+    categoryLabel: "Transporte Urbano",
+    lat: -26.870504,
+    lng: -49.095490,
+    distance: "2,4 km",
+    travelTime: "4 min",
+    description:
+      "Um dos maiores terminais de integração de transporte coletivo da zona norte de Blumenau.",
+  },
+  {
+    id: "terminal-fortaleza",
+    name: "Terminal Urbano Fortaleza",
+    category: "logistica",
+    categoryLabel: "Transporte Urbano",
+    lat: -26.880159,
+    lng: -49.067798,
+    distance: "2,6 km",
+    travelTime: "5 min",
+    description:
+      "Terminal de integração urbana conectando o eixo Fidélis / 1º de Janeiro / Fortaleza.",
   },
   {
     id: "aeroporto-quero-quero",
     name: "Aeroporto Regional de Blumenau (Quero-Quero)",
     category: "logistica",
     categoryLabel: "Infraestrutura Aérea",
-    lat: -26.8325,
-    lng: -49.0902,
+    lat: -26.832500,
+    lng: -49.090200,
     distance: "3,1 km",
     travelTime: "5 min",
     description:
       "Aeródromo executivo e regional situado na Itoupava Central, com acesso rápido pela BR-470.",
-  },
-  {
-    id: "terminal-fortaleza",
-    name: "Terminal Urbano Fortaleza & Eixo Comercial",
-    category: "servico-publico",
-    categoryLabel: "Transporte Público",
-    lat: -26.8669,
-    lng: -49.0631,
-    distance: "2,2 km",
-    travelTime: "4 min",
-    description:
-      "Integração do transporte coletivo municipal para colaboradores e operação urbana no eixo Fidélis / Fortaleza / Itoupava Norte.",
-  },
-  {
-    id: "ambulancia-saude-fidelis",
-    name: "Unidade de Saúde ESF Fidélis / Rede Pública",
-    category: "servico-publico",
-    categoryLabel: "Saúde & Serviços Públicos",
-    lat: -26.8518,
-    lng: -49.0815,
-    distance: "1,1 km",
-    travelTime: "3 min",
-    description:
-      "Equipamentos públicos de saúde, educação básica e infraestrutura urbana consolidada (rede elétrica trifásica, água e fibra óptica).",
-  },
-  {
-    id: "norte-shopping",
-    name: "Norte Shopping & Polo Empresarial BR-470",
-    category: "infraestrutura",
-    categoryLabel: "Serviços & Comércio",
-    lat: -26.8462,
-    lng: -49.0985,
-    distance: "3,4 km",
-    travelTime: "5 min",
-    description:
-      "Principal centro de compras, serviços, hotelaria e gastronomia da zona norte de Blumenau, às margens da BR-470.",
-  },
-  {
-    id: "centro-blumenau",
-    name: "Centro Financeiro & Prefeitura de Blumenau",
-    category: "infraestrutura",
-    categoryLabel: "Centro Urbano",
-    lat: -26.9165,
-    lng: -49.0661,
-    distance: "7,8 km",
-    travelTime: "14 min",
-    description:
-      "Conexão fluida ao centro administrativo de Blumenau através do corredor da Rua 1º de Janeiro / Rua 2 de Setembro e Via Expressa.",
   },
 ];
 
@@ -361,4 +533,3 @@ export const TECHNICAL_DOSSIER_DATA = {
     },
   ],
 };
-

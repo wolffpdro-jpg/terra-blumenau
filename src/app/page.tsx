@@ -9,8 +9,8 @@ import {
   useTransform,
 } from "motion/react";
 import { BROKER_DATA, PROPERTY_SUMMARY } from "@/data/propertyData";
-import { InteractiveMap } from "@/components/InteractiveMap";
-import { TopographicBlueprint } from "@/components/TopographicBlueprint";
+import InteractiveMap from "@/components/InteractiveMap";
+import TopographicBlueprint from "@/components/TopographicBlueprint";
 import { RWLogo } from "@/components/RWLogo";
 import {
   AlertTriangle,
@@ -575,53 +575,50 @@ export default function TerraBlumenauPage() {
       {/* SEÇÃO 02 — MAPA INTERATIVO GOOGLE MAPS (2D) */}
       <section
         id="mapa"
-        className="bg-[#11221B] text-[#F7F5F0] py-20 lg:py-28 border-b border-[#C59B6D]/25"
+        className="bg-[#11221B] text-[#F7F5F0] py-16 lg:py-24 border-b border-[#C59B6D]/25"
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-10">
-            <div className="lg:col-span-7">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-6">
+            <div>
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#C59B6D] block">
-                02 · Localização Interativa & Google Maps
+                02 · Localização & Google Maps
               </span>
-              <h2 className="font-serif text-4xl sm:text-5xl text-[#F7F5F0] mt-3 leading-[1.08]">
-                Demarcação do terreno, acessos e serviços na região.
+              <h2 className="font-serif text-3xl sm:text-5xl text-[#F7F5F0] mt-2 leading-[1.08]">
+                Limites do terreno, acessos e entorno comercial.
               </h2>
             </div>
-            <div className="lg:col-span-5 text-sm sm:text-base text-[#E6DFD3]/85 leading-relaxed">
-              Confira a demarcação exata dos <strong>10.361 m²</strong> sobre a
-              imagem de satélite do <strong>Google Maps</strong>. Destaque as
-              frentes do terreno, a rota de 220 m até a BR-470 e clique nos
-              pontos de referência próximos para ver distâncias e rotas.
-            </div>
+            <p className="text-sm text-[#E6DFD3]/80 lg:max-w-sm">
+              10.361 m² demarcados via satélite, a 220 m da BR-470. Clique nos
+              pontos do mapa para ver distâncias e rotas.
+            </p>
           </div>
 
           <InteractiveMap />
         </div>
       </section>
 
-      {/* SEÇÃO 03 — RELEVO 3D, ZONEAMENTO & DOSSIÊ (Sem a tabela "Poligonal Fechada") */}
+      {/* SEÇÃO 03 — PLANTA TÉCNICA 2D, ZONEAMENTO & DOSSIÊ */}
       <section
         id="ficha-tecnica"
-        className="bg-[#162921] text-[#F7F5F0] py-20 lg:py-28 border-b border-[#C59B6D]/25"
+        className="bg-[#162921] text-[#F7F5F0] py-16 lg:py-24 border-b border-[#C59B6D]/25"
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-10">
-            <div className="lg:col-span-7">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-8">
+            <div>
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#C59B6D] block">
-                03 · Relevo, Medidas e Zoneamento
+                03 · Planta Técnica 2D & Zoneamento
               </span>
-              <h2 className="font-serif text-4xl sm:text-5xl text-[#F7F5F0] mt-3 leading-[1.08]">
-                Maquete Topográfica 3D e Potencial de Uso.
+              <h2 className="font-serif text-3xl sm:text-5xl text-[#F7F5F0] mt-2 leading-[1.08]">
+                Planta Planialtimétrica e Potencial de Uso.
               </h2>
             </div>
-            <div className="lg:col-span-5 text-sm sm:text-base text-[#E6DFD3]/85 leading-relaxed">
-              Visualize o relevo do terreno em 3D, confira o zoneamento da
-              Prefeitura de Blumenau e solicite o Dossiê Completo com a matrícula
-              e pareceres técnicos.
-            </div>
+            <p className="text-sm text-[#E6DFD3]/80 lg:max-w-sm">
+              Desenho técnico oficial com alinhamento das ruas, medidas de
+              perímetro, curvas de nível e zoneamento municipal.
+            </p>
           </div>
 
-          {/* Interactive 3D Maquete & 2D Blueprint */}
+          {/* 2D Technical CAD Blueprint */}
           <TopographicBlueprint />
 
           {/* Zoning & On-Request Dossier (Side by Side, Clean & Direct) */}
