@@ -40,6 +40,21 @@ type POICategoryFilter =
 
 const STORAGE_KEY_POLYGON = "terra_blumenau_calibrated_polygon_v3";
 
+function getCategorySvgIcon(category: MapPOI["category"], strokeColor: string): string {
+  switch (category) {
+    case "mercado":
+      return `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${strokeColor}" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>`;
+    case "comercio":
+      return `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${strokeColor}" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`;
+    case "educacao":
+      return `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${strokeColor}" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>`;
+    case "parque":
+      return `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${strokeColor}" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19v3"/><path d="M12 3 5 15h14Z"/></svg>`;
+    default:
+      return `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${strokeColor}" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
+  }
+}
+
 export default function InteractiveMap() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
@@ -53,6 +68,7 @@ export default function InteractiveMap() {
   const [showPois, setShowPois] = useState(true);
   const [poiFilter, setPoiFilter] = useState<POICategoryFilter>("todos");
   const [selectedPoi, setSelectedPoi] = useState<MapPOI | null>(null);
+  const [currentZoom, setCurrentZoom] = useState<number>(18);
   const [isLoaded, setIsLoaded] = useState(false);
 
   // Calibration tool state
@@ -151,6 +167,14 @@ export default function InteractiveMap() {
 
       L.control.zoom({ position: "bottomright" }).addTo(map);
 
+      map.on("zoomend", () => {
+        setCurrentZoom(map.getZoom());
+      });
+
+      map.on("click", () => {
+        setSelectedPoi(null);
+      });
+
       const tileLayer = L.tileLayer(
         "https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
         { maxZoom: 21 }
@@ -200,6 +224,8 @@ export default function InteractiveMap() {
     group.clearLayers();
     handlesGroup.clearLayers();
 
+    const isZoomedClose = currentZoom >= 17;
+
     // 1. Property Perimeter, Frontages & 220m BR-470 Route
     if (showPerimeter) {
       // Outer subtle glow
@@ -216,7 +242,7 @@ export default function InteractiveMap() {
         weight: 2.5,
         opacity: 1,
         fillColor: "#C59B6D",
-        fillOpacity: 0.2,
+        fillOpacity: 0.22,
       }).addTo(group);
 
       // Primary Frontage Highlight: Rua 1º de Janeiro (West edge: P22 -> P23 -> P1 -> P2 -> P3)
@@ -251,9 +277,10 @@ export default function InteractiveMap() {
         })
         .addTo(group);
 
-      // Center Badge (uses .terra-map-badge with width: max-content so background always fits text)
+      // Center Badge: full label when zoomed in, compact gold badge when zoomed out
       if (!isCalibrating) {
-        const centerHtml = `
+        const centerHtml = isZoomedClose
+          ? `
           <div class="terra-map-badge" style="
             background: rgba(17, 34, 27, 0.94);
             border: 1.5px solid #C59B6D;
@@ -270,19 +297,49 @@ export default function InteractiveMap() {
               10.361,46 m²
             </span>
           </div>
+        `
+          : `
+          <div class="terra-poi-pill" style="
+            background: #C59B6D;
+            color: #11221B;
+            border: 2px solid #11221B;
+            padding: 3px 8px;
+            border-radius: 9999px;
+            font-family: var(--font-jakarta), sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.55);
+          ">
+            <span>TERRENO · 10.361 m²</span>
+          </div>
         `;
         const centerIcon = L.divIcon({
           html: centerHtml,
           className: "custom-leaflet-div-icon",
           iconSize: [0, 0],
         });
-        L.marker(
+        const centerMarker = L.marker(
           [
             PROPERTY_SUMMARY.centerCoordinates.lat,
             PROPERTY_SUMMARY.centerCoordinates.lng,
           ],
-          { icon: centerIcon, interactive: false }
+          { icon: centerIcon, interactive: !isZoomedClose }
         ).addTo(group);
+
+        if (!isZoomedClose) {
+          centerMarker.on("click", (e: any) => {
+            L.DomEvent.stopPropagation(e);
+            map.flyTo(
+              [
+                PROPERTY_SUMMARY.centerCoordinates.lat,
+                PROPERTY_SUMMARY.centerCoordinates.lng,
+              ],
+              18,
+              { duration: 0.8 }
+            );
+          });
+        }
       }
     }
 
@@ -392,6 +449,14 @@ export default function InteractiveMap() {
       };
 
       const filteredPois = MAP_POIS.filter((poi) => {
+        // When zoomed far out (<16), hide the 2 property frontage markers so they don't overlap the property badge
+        if (
+          currentZoom < 16 &&
+          selectedPoi?.id !== poi.id &&
+          (poi.id === "acesso-principal" || poi.id === "acesso-frieda-beck")
+        ) {
+          return false;
+        }
         if (poiFilter === "todos") return true;
         if (poiFilter === "acesso")
           return poi.category === "acesso" || poi.category === "logistica";
@@ -401,12 +466,14 @@ export default function InteractiveMap() {
       filteredPois.forEach((poi) => {
         const color = categoryColors[poi.category];
         const isSelected = selectedPoi?.id === poi.id;
+        const showFullTextLabel = isZoomedClose || isSelected;
         const shortName = poi.name.split("·")[0].split("(")[0].trim();
         const shortDist = `${poi.distance.split(" ")[0]} ${
           poi.distance.split(" ")[1] || ""
         }`.trim();
 
-        const markerHtml = `
+        const markerHtml = showFullTextLabel
+          ? `
           <div class="terra-poi-pill" style="
             background: ${isSelected ? "#C59B6D" : "rgba(17, 34, 27, 0.94)"};
             color: ${isSelected ? "#11221B" : "#F7F5F0"};
@@ -430,6 +497,24 @@ export default function InteractiveMap() {
             <span style="white-space: nowrap;">${shortName}</span>
             <span style="opacity: 0.78; font-size: 10px; white-space: nowrap;">${shortDist}</span>
           </div>
+        `
+          : `
+          <div style="
+            width: 30px;
+            height: 30px;
+            border-radius: 9999px;
+            background: rgba(17, 34, 27, 0.95);
+            border: 2px solid ${color};
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.55);
+            cursor: pointer;
+            transform: translate(-15px, -15px);
+            transition: transform 0.15s ease;
+          " title="${poi.name} (${poi.distance}) — Clique para ver">
+            ${getCategorySvgIcon(poi.category, color)}
+          </div>
         `;
 
         const poiIcon = L.divIcon({
@@ -438,14 +523,14 @@ export default function InteractiveMap() {
           iconSize: [0, 0],
         });
 
-        const marker = L.marker([poi.lat, poi.lng], { icon: poiIcon }).addTo(
-          group
-        );
-        marker.on("click", () => {
+        const marker = L.marker([poi.lat, poi.lng], {
+          icon: poiIcon,
+          zIndexOffset: isSelected ? 1000 : 0,
+        }).addTo(group);
+
+        marker.on("click", (e: any) => {
+          L.DomEvent.stopPropagation(e);
           setSelectedPoi(poi);
-          map.flyTo([poi.lat, poi.lng], Math.max(map.getZoom(), 16), {
-            duration: 0.7,
-          });
         });
       });
     }
@@ -455,6 +540,7 @@ export default function InteractiveMap() {
     showPois,
     poiFilter,
     selectedPoi,
+    currentZoom,
     polygonCoords,
     isCalibrating,
     savePolygonCoords,
@@ -487,7 +573,9 @@ export default function InteractiveMap() {
     setShowPois(true);
     const map = mapInstanceRef.current;
     if (!map) return;
-    map.flyTo([poi.lat, poi.lng], 16, { duration: 0.7 });
+    map.flyTo([poi.lat, poi.lng], Math.max(map.getZoom(), 15), {
+      duration: 0.7,
+    });
   };
 
   const filteredPoiList = MAP_POIS.filter((poi) => {
@@ -735,9 +823,9 @@ export default function InteractiveMap() {
             <div className="flex flex-wrap gap-1">
               {[
                 { id: "todos", label: "Todos", icon: null },
-                { id: "parque", label: "Parques (≤3km)", icon: Trees },
+                { id: "parque", label: "Parque", icon: Trees },
                 { id: "mercado", label: "Mercados", icon: ShoppingCart },
-                { id: "comercio", label: "Shoppings", icon: Building2 },
+                { id: "comercio", label: "Comércio & Lazer", icon: Building2 },
                 { id: "educacao", label: "Faculdades", icon: GraduationCap },
                 { id: "acesso", label: "Acessos", icon: Truck },
               ].map((tab) => {

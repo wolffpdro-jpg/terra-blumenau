@@ -231,18 +231,6 @@ export const MAP_POIS: MapPOI[] = [
       "Grande atacarejo e centro de compras diárias situado a apenas 1 km do terreno, junto ao eixo da BR-470.",
   },
   {
-    id: "supermercado-vansuit",
-    name: "Supermercado Vansuit (R. 1º de Janeiro)",
-    category: "mercado",
-    categoryLabel: "Supermercado",
-    lat: -26.867711,
-    lng: -49.070937,
-    distance: "1,2 km",
-    travelTime: "2 min",
-    description:
-      "Supermercado de vizinhança localizado no próprio eixo da Rua 1º de Janeiro, atendendo o cotidiano residencial e comercial.",
-  },
-  {
     id: "fort-atacadista-norte",
     name: "Fort Atacadista (Itoupava Norte / BR-470)",
     category: "mercado",
@@ -291,18 +279,18 @@ export const MAP_POIS: MapPOI[] = [
       "Supermercado completo no coração comercial do bairro Fortaleza.",
   },
 
-  // Shoppings & Centros Comerciais
+  // Shoppings, Gastronomia & Centros Comerciais
   {
-    id: "park-itoupava",
-    name: "Park Itoupava (Centro Comercial)",
+    id: "wila-gastronomica",
+    name: "Wila Gastronômica (Trevo BR-470)",
     category: "comercio",
-    categoryLabel: "Centro Comercial",
-    lat: -26.855134,
-    lng: -49.086911,
-    distance: "1,1 km",
+    categoryLabel: "Gastronomia & Convivência",
+    lat: -26.855902,
+    lng: -49.085934,
+    distance: "1,0 km",
     travelTime: "2 min",
     description:
-      "Centro comercial e de serviços próximo ao trevo da BR-470, com gastronomia, comércio e conveniências.",
+      "Polo gastronômico e espaço de lazer na Rua Dr. Pedro Zimmermann, a apenas 2 minutos do terreno.",
   },
   {
     id: "norte-shopping",
@@ -315,18 +303,6 @@ export const MAP_POIS: MapPOI[] = [
     travelTime: "3 min",
     description:
       "Principal shopping center da zona norte de Blumenau, com âncoras nacionais, cinema, bancos, praça de alimentação e serviços.",
-  },
-  {
-    id: "centro-comercial-fortaleza",
-    name: "Centro Comercial Fortaleza",
-    category: "comercio",
-    categoryLabel: "Centro Comercial",
-    lat: -26.880657,
-    lng: -49.068706,
-    distance: "2,7 km",
-    travelTime: "5 min",
-    description:
-      "Polo de comércio, agências bancárias, clínicas e serviços urbanos na Rua Francisco Vahldieck (Fortaleza).",
   },
   {
     id: "shopping-park-europeu",
@@ -390,8 +366,20 @@ export const MAP_POIS: MapPOI[] = [
     description:
       "Centro Tecnológico e de Engenharias da FURB e Instituto Gene de Inovação na Rua São Paulo.",
   },
+  {
+    id: "furb-campus1",
+    name: "FURB — Campus 1 (Sede Central)",
+    category: "educacao",
+    categoryLabel: "Universidade (Sede Central)",
+    lat: -26.905493,
+    lng: -49.078723,
+    distance: "5,4 km",
+    travelTime: "8 min",
+    description:
+      "Principal campus universitário de Blumenau (Rua Antônio da Veiga), com rápido deslocamento pelos corredores viários da região norte.",
+  },
 
-  // Parques Públicos & Praças Municipais (Raio até 3 km)
+  // Parque Público Municipal
   {
     id: "parque-das-itoupavas",
     name: "Parque das Itoupavas (Parque Alcântaro Corrêa)",
@@ -404,80 +392,8 @@ export const MAP_POIS: MapPOI[] = [
     description:
       "Principal parque público da Região Norte de Blumenau (mais de 14.000 m²), na Rua 1º de Janeiro junto à BR-470, com ciclovia, pista de caminhada, quadras, playground e pet place.",
   },
-  {
-    id: "praca-renato-luiz-maba",
-    name: "Praça Pública Renato Luiz Maba (Fidélis)",
-    category: "parque",
-    categoryLabel: "Praça & Lazer Público",
-    lat: -26.848187,
-    lng: -49.075546,
-    distance: "1,0 km",
-    travelTime: "2 min",
-    description:
-      "Praça municipal no próprio Bairro Fidélis com quadra poliesportiva iluminada, playground infantil e área de convivência.",
-  },
-  {
-    id: "praca-eugen-pawlowsky",
-    name: "Praça Pública Eugen Pawlowsky (Itoupava Norte)",
-    category: "parque",
-    categoryLabel: "Praça & Lazer Público",
-    lat: -26.875590,
-    lng: -49.084730,
-    distance: "2,2 km",
-    travelTime: "4 min",
-    description:
-      "Espaço público arborizado de lazer e convivência comunitária na região da Itoupava Norte.",
-  },
-  {
-    id: "praca-tio-duda",
-    name: "Praça Pública Tio Duda (Fortaleza Alta)",
-    category: "parque",
-    categoryLabel: "Praça & Lazer Público",
-    lat: -26.861450,
-    lng: -49.051288,
-    distance: "2,5 km",
-    travelTime: "4 min",
-    description:
-      "Praça pública municipal situada na região da Fortaleza Alta, com área verde e equipamentos de lazer.",
-  },
-  {
-    id: "praca-bruxelas",
-    name: "Praça Pública Bruxelas (Itoupava Norte)",
-    category: "parque",
-    categoryLabel: "Praça & Lazer Público",
-    lat: -26.884034,
-    lng: -49.077825,
-    distance: "2,9 km",
-    travelTime: "5 min",
-    description:
-      "Praça pública com quadra esportiva de areia iluminada, playground e área de lazer familiar.",
-  },
 
-  // Terminais & Infraestrutura Regional
-  {
-    id: "terminal-aterro",
-    name: "Terminal Urbano Aterro",
-    category: "logistica",
-    categoryLabel: "Transporte Urbano",
-    lat: -26.870504,
-    lng: -49.095490,
-    distance: "2,4 km",
-    travelTime: "4 min",
-    description:
-      "Um dos maiores terminais de integração de transporte coletivo da zona norte de Blumenau.",
-  },
-  {
-    id: "terminal-fortaleza",
-    name: "Terminal Urbano Fortaleza",
-    category: "logistica",
-    categoryLabel: "Transporte Urbano",
-    lat: -26.880159,
-    lng: -49.067798,
-    distance: "2,6 km",
-    travelTime: "5 min",
-    description:
-      "Terminal de integração urbana conectando o eixo Fidélis / 1º de Janeiro / Fortaleza.",
-  },
+  // Infraestrutura Regional
   {
     id: "aeroporto-quero-quero",
     name: "Aeroporto Regional de Blumenau (Quero-Quero)",

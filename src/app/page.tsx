@@ -16,9 +16,12 @@ import {
   AlertTriangle,
   ArrowUpRight,
   Building2,
+  Calendar,
+  Car,
   Check,
   Copy,
   FileText,
+  Home,
   Lock,
   Mail,
   MapPin,
@@ -28,6 +31,8 @@ import {
   Ruler,
   Send,
   ShieldCheck,
+  Sparkles,
+  Trees,
   Truck,
 } from "lucide-react";
 
@@ -186,7 +191,7 @@ export default function TerraBlumenauPage() {
 
           <nav
             aria-label="Navegação Principal"
-            className="hidden lg:flex items-center gap-8 text-xs font-medium uppercase tracking-[0.15em] text-[#E6DFD3]/85"
+            className="hidden lg:flex items-center gap-7 text-xs font-medium uppercase tracking-[0.15em] text-[#E6DFD3]/85"
           >
             <a href="#terreno" className="hover:text-[#C59B6D] transition">
               01. O Terreno
@@ -197,8 +202,11 @@ export default function TerraBlumenauPage() {
             <a href="#ficha-tecnica" className="hover:text-[#C59B6D] transition">
               03. Planta & Zoneamento
             </a>
+            <a href="#estrutura" className="hover:text-[#C59B6D] transition">
+              04. O Que Já Existe
+            </a>
             <a href="#contato" className="hover:text-[#C59B6D] transition">
-              04. Contato
+              05. Contato
             </a>
           </nav>
 
@@ -719,7 +727,218 @@ export default function TerraBlumenauPage() {
         </div>
       </section>
 
-      {/* SEÇÃO 04 — CONTATO COMERCIAL (Robert Wolff) */}
+      {/* SEÇÃO 04 — O QUE JÁ EXISTE NO TERRENO (Benfeitorias, Jardim, Eventos & Airbnb) */}
+      <section
+        id="estrutura"
+        className="bg-[#F7F5F0] text-[#11221B] py-20 lg:py-28 border-b border-[#11221B]/15"
+      >
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          {/* Header */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end border-b border-[#11221B]/15 pb-10">
+            <div className="lg:col-span-7">
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#8C6239] block">
+                04 · O Que Já Existe no Terreno
+              </span>
+              <h2 className="font-serif text-4xl sm:text-5xl text-[#11221B] mt-3 leading-[1.08]">
+                Jardim formado, espaço de eventos ativo e casa pronta para Airbnb.
+              </h2>
+            </div>
+            <div className="lg:col-span-5 text-base text-[#11221B]/80 leading-relaxed">
+              Mais do que uma área bruta, a propriedade já conta com um{" "}
+              <strong>belo jardim arborizado</strong>, uma estrutura aberta que{" "}
+              <strong>já gera renda com eventos</strong> e duas construções com
+              perfis bem definidos.
+            </div>
+          </div>
+
+          {/* 3 Existing Structures / Features Cards */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-12">
+            {/* 1. Casa Aconchegante com Deck (Airbnb) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5 }}
+              className="bg-[#152820] border border-[#11221B] border-t-2 border-t-[#C59B6D] p-7 shadow-md flex flex-col justify-between text-[#F7F5F0]"
+            >
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#C59B6D]">
+                    Construção 01 · Pronta para Uso
+                  </span>
+                  <div className="w-10 h-10 bg-[#11221B] border border-[#C59B6D]/40 flex items-center justify-center text-[#C59B6D]">
+                    <Sparkles className="w-5 h-5" />
+                  </div>
+                </div>
+
+                <h3 className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-4 font-normal">
+                  Casa Aconchegante com Amplo Deck
+                </h3>
+
+                <div className="inline-block mt-3 px-3 py-1 bg-[#C59B6D]/15 border border-[#C59B6D]/45 text-[#C59B6D] text-xs font-semibold tracking-wide">
+                  Ideal para Airbnb ou Hospedagem
+                </div>
+
+                <p className="text-sm text-[#E6DFD3]/90 mt-4 leading-relaxed">
+                  Residência super charmosa e bem conservada com{" "}
+                  <strong className="text-[#F7F5F0]">1 quarto</strong>,{" "}
+                  <strong className="text-[#F7F5F0]">1 banheiro</strong> e{" "}
+                  <strong className="text-[#F7F5F0]">
+                    sala e cozinha integradas
+                  </strong>{" "}
+                  a uma sacada externa com amplo deck de madeira. Pela sua
+                  integração total com a natureza do terreno, está pronta para
+                  começar a render imediatamente no <strong>Airbnb</strong>.
+                </p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-[#F7F5F0]/12 flex flex-wrap gap-2 text-[11px] text-[#E6DFD3]/80">
+                <span className="px-2.5 py-1 bg-[#11221B] border border-[#C59B6D]/25">
+                  1 Quarto + 1 Banheiro
+                </span>
+                <span className="px-2.5 py-1 bg-[#11221B] border border-[#C59B6D]/25">
+                  Sala & Cozinha Integradas
+                </span>
+                <span className="px-2.5 py-1 bg-[#11221B] border border-[#C59B6D]/25">
+                  Sacada & Amplo Deck
+                </span>
+              </div>
+            </motion.div>
+
+            {/* 2. Estrutura Externa para Eventos + Jardim + 30 vagas */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: 0.08 }}
+              className="bg-[#152820] border border-[#11221B] border-t-2 border-t-[#C59B6D] p-7 shadow-md flex flex-col justify-between text-[#F7F5F0]"
+            >
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#C59B6D]">
+                    Natureza & Eventos · Operação Ativa
+                  </span>
+                  <div className="w-10 h-10 bg-[#11221B] border border-[#C59B6D]/40 flex items-center justify-center text-[#C59B6D]">
+                    <Trees className="w-5 h-5" />
+                  </div>
+                </div>
+
+                <h3 className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-4 font-normal">
+                  Espaço para Eventos & Belo Jardim
+                </h3>
+
+                <div className="inline-block mt-3 px-3 py-1 bg-[#C59B6D]/15 border border-[#C59B6D]/45 text-[#C59B6D] text-xs font-semibold tracking-wide">
+                  Estacionamento para ~30 carros
+                </div>
+
+                <p className="text-sm text-[#E6DFD3]/90 mt-4 leading-relaxed">
+                  O terreno conta com uma{" "}
+                  <strong className="text-[#F7F5F0]">
+                    estrutura externa aberta
+                  </strong>{" "}
+                  preparada para eventos de médio porte em meio à natureza —
+                  atualmente já alugada pelo proprietário para{" "}
+                  <strong className="text-[#F7F5F0]">
+                    eventos familiares e corporativos
+                  </strong>
+                  . Tudo cercado por um jardim maduro com grande diversidade de
+                  plantas e estacionamento próprio para cerca de{" "}
+                  <strong className="text-[#F7F5F0]">30 veículos</strong>.
+                </p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-[#F7F5F0]/12 flex flex-wrap gap-2 text-[11px] text-[#E6DFD3]/80">
+                <span className="px-2.5 py-1 bg-[#11221B] border border-[#C59B6D]/25 flex items-center gap-1">
+                  <Calendar className="w-3 h-3 text-[#C59B6D]" /> Eventos
+                  Familiares & Corporativos
+                </span>
+                <span className="px-2.5 py-1 bg-[#11221B] border border-[#C59B6D]/25 flex items-center gap-1">
+                  <Car className="w-3 h-3 text-[#C59B6D]" /> ~30 Vagas Internas
+                </span>
+              </div>
+            </motion.div>
+
+            {/* 3. Segunda Casa (Transparência Comercial) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: 0.16 }}
+              className="bg-[#152820] border border-[#11221B] border-t-2 border-t-[#C59B6D] p-7 shadow-md flex flex-col justify-between text-[#F7F5F0]"
+            >
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#C59B6D]">
+                    Construção 02 · Área Livre para Projeto
+                  </span>
+                  <div className="w-10 h-10 bg-[#11221B] border border-[#C59B6D]/40 flex items-center justify-center text-[#C59B6D]">
+                    <Home className="w-5 h-5" />
+                  </div>
+                </div>
+
+                <h3 className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-4 font-normal">
+                  Segunda Casa (Pronta para Desocupação)
+                </h3>
+
+                <div className="inline-block mt-3 px-3 py-1 bg-[#C59B6D]/15 border border-[#C59B6D]/45 text-[#C59B6D] text-xs font-semibold tracking-wide">
+                  Sem amarras para demolição ou obra
+                </div>
+
+                <p className="text-sm text-[#E6DFD3]/90 mt-4 leading-relaxed">
+                  Com total transparência: a segunda casa existente no terreno{" "}
+                  <strong className="text-[#F7F5F0]">
+                    já viu dias melhores
+                  </strong>{" "}
+                  e está pronta para ser desocupada. Para construtoras ou
+                  empresas, isso significa liberdade imediata para demolir e
+                  limpar o setor frontal sem custo emocional, ou adaptá-la como
+                  canteiro e apoio de obra.
+                </p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-[#F7F5F0]/12 flex flex-wrap gap-2 text-[11px] text-[#E6DFD3]/80">
+                <span className="px-2.5 py-1 bg-[#11221B] border border-[#C59B6D]/25">
+                  Pronta para Desocupar
+                </span>
+                <span className="px-2.5 py-1 bg-[#11221B] border border-[#C59B6D]/25">
+                  Facilidade para Nova Implantação
+                </span>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Investor Value Callout Banner */}
+          <div className="mt-10 bg-[#E6DFD3] border border-[#11221B]/15 p-6 lg:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div className="max-w-3xl">
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#8C6239] block">
+                Vantagem Estratégica para o Comprador
+              </span>
+              <h4 className="font-serif text-2xl sm:text-3xl text-[#11221B] mt-1">
+                Renda imediata enquanto você aprova seu projeto ou decide o futuro da área
+              </h4>
+              <p className="text-sm sm:text-base text-[#11221B]/80 mt-2 leading-relaxed">
+                Enquanto projetos de incorporação ou galpões tramitam nas etapas
+                de engenharia e prefeitura, o imóvel já pode gerar caixa desde o
+                primeiro mês com a <strong>locação da casa no Airbnb</strong> e a{" "}
+                <strong>agenda de eventos corporativos e familiares</strong> em
+                meio à natureza.
+              </p>
+            </div>
+
+            <div className="shrink-0">
+              <a
+                href="#contato"
+                className="inline-flex items-center gap-2.5 px-6 py-4 bg-[#11221B] text-[#F7F5F0] text-xs uppercase tracking-[0.18em] font-bold hover:bg-[#1D352B] transition"
+              >
+                <Phone className="w-4 h-4 text-[#C59B6D]" />
+                <span>Agendar Visita Presencial</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SEÇÃO 05 — CONTATO COMERCIAL (Robert Wolff) */}
       <section
         id="contato"
         className="bg-[#11221B] text-[#F7F5F0] py-20 lg:py-28"
@@ -730,7 +949,7 @@ export default function TerraBlumenauPage() {
             <div className="lg:col-span-5 space-y-8">
               <div>
                 <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#C59B6D] block">
-                  04 · Atendimento Direto
+                  05 · Atendimento Direto
                 </span>
                 <h2 className="font-serif text-4xl sm:text-5xl text-[#F7F5F0] mt-3 leading-[1.08]">
                   Converse com o corretor responsável.
