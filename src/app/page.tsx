@@ -675,26 +675,6 @@ export default function TerraBlumenauPage() {
                   <span>Solicitar Dossiê Completo via WhatsApp</span>
                 </a>
 
-                {/* Temporary Owner Preview Notice */}
-                <div className="rounded-lg p-3.5 bg-[#11221B]/90 border border-amber-400/50 text-xs text-amber-200/90 space-y-2">
-                  <div className="flex items-center gap-2 font-semibold text-amber-300">
-                    <AlertTriangle className="w-4 h-4 shrink-0" />
-                    <span>Acesso Interno (Ajustar antes do lançamento)</span>
-                  </div>
-                  <p className="text-[11px] text-[#E6DFD3]/80 leading-relaxed">
-                    Este botão abaixo está visível apenas para você conferir e
-                    editar o modelo do Dossiê Técnico. Antes de publicar o site
-                    oficialmente, basta remover este atalho para que o envio seja
-                    feito exclusivamente pelo WhatsApp.
-                  </p>
-                  <Link
-                    href="/dossie-tecnico"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-amber-400/15 border border-amber-400/50 text-amber-200 text-[11px] font-medium hover:bg-amber-400/25 transition"
-                  >
-                    <FileText className="w-3.5 h-3.5" />
-                    <span>Ver / Editar Página do Dossiê Técnico →</span>
-                  </Link>
-                </div>
               </div>
             </div>
           </div>
