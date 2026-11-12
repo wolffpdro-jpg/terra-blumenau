@@ -1,0 +1,74 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+@import "maplibre-gl/dist/maplibre-gl.css";
+
+@theme inline {
+  --font-serif: var(--font-cormorant), Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+:root {
+  --terra-green: #11221b;
+  --terra-green-mid: #182e25;
+  --terra-sand: #e6dfd3;
+  --terra-offwhite: #f7f5f0;
+  --terra-bronze: #c59b6d;
+  --terra-bronze-dark: #8c6239;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #11221b;
+  color: #f7f5f0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #11221b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8c6239;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c59b6d;
+}
+
+/* Leaflet Popup Customization */
+.leaflet-popup-content-wrapper {
+  border-radius: 0px !important;
+  background: #f7f5f0 !important;
+  border: 1px solid #c59b6d !important;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45) !important;
+}
+
+.leaflet-popup-tip {
+  background: #f7f5f0 !important;
+}
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #11221b !important;
+  }
+}
