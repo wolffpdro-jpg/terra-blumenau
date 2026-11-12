@@ -60,7 +60,6 @@ const ELEVATION_LABELS = [
   { x: 1131, y: 1028, text: "45 m" },
   { x: 1188, y: 1033, text: "50 m" },
   { x: 1258, y: 1037, text: "55 m" },
-  { x: 1327, y: 1044, text: "60 m" },
 ];
 
 export default function TopographicBlueprint() {

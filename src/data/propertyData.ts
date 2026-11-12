@@ -85,7 +85,7 @@ export const PROPERTY_SUMMARY = {
     amplitude: "30 m (aclive gradual Oeste → Sudeste)",
     floodSafety: "100% Livre de Cota de Enchente",
     floodSafetyDetail:
-      "Situado integralmente entre as cotas altimétricas de 30 m e 60 m acima do nível do mar — muito acima das cotas de alerta e inundação de Blumenau (10 m e 12 m).",
+      "Situado integralmente a partir da cota altimétrica de 30 m acima do nível do mar — muito acima das cotas de alerta e inundação de Blumenau (10 m e 12 m).",
   },
   zoning: {
     summary: "Duplo Zoneamento: ZI-1 & ZOC",
@@ -493,7 +493,7 @@ export const TECHNICAL_DOSSIER_DATA = {
       status: "Zoneamento Misto ZI-1 e ZOC · Fora de Cota de Enchente",
       reference: "Plano Diretor LC nº 1.181/2018 e Código de Zoneamento",
       summary:
-        "Imóvel inserido em Zona Industrial 1 (ZI-1) na porção oeste/sul e Zona de Ocupação Controlada (ZOC) na porção central/leste. Totalmente livre das manchas de inundação de 10 m e 12 m (cotas altimétricas do terreno entre 30 m e 60 m).",
+        "Imóvel inserido em Zona Industrial 1 (ZI-1) na porção oeste/sul e Zona de Ocupação Controlada (ZOC) na porção central/leste. Totalmente livre das manchas de inundação de 10 m e 12 m (cota altimétrica do terreno a partir de 30 m).",
     },
     {
       agency: "SEMMAS — Secretaria Municipal do Meio Ambiente e Sustentabilidade",

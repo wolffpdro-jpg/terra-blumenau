@@ -14,7 +14,6 @@ import {
   Maximize2,
   Eye,
   EyeOff,
-  Sliders,
   Copy,
   Check,
   RotateCcw,
@@ -55,6 +54,30 @@ function getCategorySvgIcon(category: MapPOI["category"], strokeColor: string): 
   }
 }
 
+function distanceMeters(d: string): number {
+  const m = d.replace(",", ".").match(/([\d.]+)\s*(km|m)\b/i);
+  if (!m) return Number.POSITIVE_INFINITY;
+  return parseFloat(m[1]) * (m[2].toLowerCase() === "km" ? 1000 : 1);
+}
+
+// Order: BR-470 first, then the nearest of each category, then the rest by distance.
+function orderPois(list: MapPOI[], groupByCategory: boolean): MapPOI[] {
+  const byDist = [...list].sort(
+    (a, b) => distanceMeters(a.distance) - distanceMeters(b.distance)
+  );
+  if (!groupByCategory) return byDist;
+  const first: MapPOI[] = [];
+  const trevo = byDist.find((p) => p.id === "trevo-br470");
+  if (trevo) first.push(trevo);
+  for (const cat of ["mercado", "educacao", "parque", "comercio", "logistica"]) {
+    const n = byDist.find((p) => p.category === cat);
+    if (n) first.push(n);
+  }
+  const rest = byDist.filter((p) => !first.includes(p) && p.category !== "acesso");
+  const testadas = byDist.filter((p) => !first.includes(p) && p.category === "acesso");
+  return [...first, ...rest, ...testadas];
+}
+
 export default function InteractiveMap() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
@@ -71,25 +94,19 @@ export default function InteractiveMap() {
   const [currentZoom, setCurrentZoom] = useState<number>(18);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Calibration tool state
-  const [isCalibrating, setIsCalibrating] = useState(false);
+  // Polygon is final (calibrated); calibration tool removed.
+  const isCalibrating = false;
   const [polygonCoords, setPolygonCoords] = useState<[number, number][]>(() =>
     PROPERTY_POLYGON_VERTICES.map((v) => [v.lat, v.lng])
   );
   const [copiedJson, setCopiedJson] = useState(false);
 
-  // Load any saved calibration from localStorage on mount
+  // Clear any stale local calibration
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY_POLYGON);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length >= 3) {
-          setPolygonCoords(parsed);
-        }
-      }
+      localStorage.removeItem(STORAGE_KEY_POLYGON);
     } catch {
-      // ignore storage errors
+      // ignore
     }
   }, []);
 
@@ -578,92 +595,15 @@ export default function InteractiveMap() {
     });
   };
 
-  const filteredPoiList = MAP_POIS.filter((poi) => {
+  const filteredPoiList = orderPois(MAP_POIS.filter((poi) => {
     if (poiFilter === "todos") return true;
     if (poiFilter === "acesso")
       return poi.category === "acesso" || poi.category === "logistica";
     return poi.category === poiFilter;
-  });
+  }), poiFilter === "todos");
 
   return (
     <div className="space-y-3">
-      {/* Calibration Toolbar (Only visible when user clicks "Ajustar Polígono") */}
-      {isCalibrating && (
-        <div className="rounded-xl border-2 border-amber-500/60 bg-[#152820] p-3.5 text-[#F7F5F0] shadow-lg">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-amber-400">
-                Ajuste Manual dos Vértices ({polygonCoords.length} pontos)
-              </p>
-              <p className="mt-0.5 text-xs text-[#E6DFD3]/85">
-                Arraste qualquer ponto no mapa, clique em <strong>+</strong> para
-                adicionar ou com o botão direito para remover.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center gap-1 rounded-lg border border-white/15 bg-white/5 p-1">
-                <button
-                  type="button"
-                  onClick={() => nudgePolygon(1, 0)}
-                  className="inline-flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-white/15"
-                >
-                  <ArrowUp className="h-3.5 w-3.5 text-amber-400" /> Norte
-                </button>
-                <button
-                  type="button"
-                  onClick={() => nudgePolygon(-1, 0)}
-                  className="inline-flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-white/15"
-                >
-                  <ArrowDown className="h-3.5 w-3.5 text-amber-400" /> Sul
-                </button>
-                <button
-                  type="button"
-                  onClick={() => nudgePolygon(0, -1)}
-                  className="inline-flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-white/15"
-                >
-                  <ArrowLeft className="h-3.5 w-3.5 text-amber-400" /> Oeste
-                </button>
-                <button
-                  type="button"
-                  onClick={() => nudgePolygon(0, 1)}
-                  className="inline-flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-white/15"
-                >
-                  <ArrowRight className="h-3.5 w-3.5 text-amber-400" /> Leste
-                </button>
-              </div>
-
-              <button
-                type="button"
-                onClick={resetPolygonToDefault}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-white/20 bg-white/5 px-2.5 py-1.5 text-xs font-medium text-[#E6DFD3] hover:bg-white/15"
-              >
-                <RotateCcw className="h-3.5 w-3.5" />
-                Padrão
-              </button>
-
-              <button
-                type="button"
-                onClick={copyPolygonToClipboard}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-amber-400 px-3 py-1.5 text-xs font-bold text-[#11221B] hover:bg-amber-300"
-              >
-                {copiedJson ? (
-                  <>
-                    <Check className="h-3.5 w-3.5" />
-                    Copiado!
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-3.5 w-3.5" />
-                    Copiar Coordenadas
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Side-by-Side Ergonomic Layout on Desktop / Compact Stack on Mobile */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch isolate relative z-10">
         {/* Left Column (7 cols): Compact 2D Google Map */}
@@ -692,27 +632,6 @@ export default function InteractiveMap() {
                 {mode.label}
               </button>
             ))}
-          </div>
-
-          {/* Discreet Calibration Button (Top-Right inside Map) */}
-          <div className="absolute top-3 right-3 z-[400]">
-            <button
-              type="button"
-              onClick={() => {
-                const next = !isCalibrating;
-                setIsCalibrating(next);
-                if (next) flyToView("terreno");
-              }}
-              className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-[11px] font-semibold backdrop-blur-md transition cursor-pointer shadow-md ${
-                isCalibrating
-                  ? "border-amber-400 bg-amber-400 text-[#11221B]"
-                  : "border-[#C59B6D]/40 bg-[#11221B]/85 text-[#E6DFD3] hover:border-[#C59B6D]"
-              }`}
-              title="Ajustar manualmente os pontos do polígono"
-            >
-              <Sliders className="h-3 w-3 text-[#C59B6D]" />
-              <span>{isCalibrating ? "Fechar Ajuste" : "Ajustar Polígono"}</span>
-            </button>
           </div>
 
           {/* Selected POI Floating Card inside Map (Bottom-Left) */}

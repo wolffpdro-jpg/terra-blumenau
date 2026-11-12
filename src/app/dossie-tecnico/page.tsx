@@ -92,7 +92,7 @@ export default function DossieTecnicoPage() {
                   {BROKER_DATA.role} · {BROKER_DATA.creci}
                 </div>
                 <div className="text-xs font-mono text-[#E6DFD3]/80 mt-1">
-                  {BROKER_DATA.phoneDisplay} · {BROKER_DATA.email}
+                  {BROKER_DATA.phoneDisplay}
                 </div>
               </div>
             </div>
@@ -308,7 +308,7 @@ export default function DossieTecnicoPage() {
               </div>
               <div className="mt-1">
                 Telefone / WhatsApp: <strong>{BROKER_DATA.phoneDisplay}</strong> ·
-                E-mail: <strong>{BROKER_DATA.email}</strong> · {BROKER_DATA.location}
+                {BROKER_DATA.location}
               </div>
             </div>
             <div className="font-mono text-[10px] uppercase tracking-wider text-[#8C6239] text-right">

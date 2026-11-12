@@ -12,6 +12,7 @@ import { BROKER_DATA, PROPERTY_SUMMARY } from "@/data/propertyData";
 import InteractiveMap from "@/components/InteractiveMap";
 import TopographicBlueprint from "@/components/TopographicBlueprint";
 import { RWLogo } from "@/components/RWLogo";
+import { SectionIllustration } from "@/components/SectionIllustrations";
 import {
   AlertTriangle,
   ArrowUpRight,
@@ -23,7 +24,6 @@ import {
   FileText,
   Home,
   Lock,
-  Mail,
   MapPin,
   Pause,
   Phone,
@@ -48,14 +48,13 @@ export default function TerraBlumenauPage() {
   // Lead Capture Form State
   const [leadName, setLeadName] = useState("");
   const [leadCompany, setLeadCompany] = useState("");
-  const [leadEmail, setLeadEmail] = useState("");
   const [leadPhone, setLeadPhone] = useState("");
   const [leadProfile, setLeadProfile] = useState("Incorporadora / Construtora");
   const [requestDossier, setRequestDossier] = useState(true);
   const [leadMessage, setLeadMessage] = useState("");
-  const [submittedChannel, setSubmittedChannel] = useState<
-    "whatsapp" | "email" | null
-  >(null);
+  const [submittedChannel, setSubmittedChannel] = useState<"whatsapp" | null>(
+    null
+  );
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -100,7 +99,6 @@ export default function TerraBlumenauPage() {
       `• Empresa: ${leadCompany || "Investidor"}`,
       `• Interesse: ${leadProfile}`,
       `• Telefone: ${leadPhone || "Não informado"}`,
-      `• E-mail: ${leadEmail || "Não informado"}`,
       `• Solicita Dossiê Técnico (Matrícula e Condicionantes): ${
         requestDossier ? "Sim" : "Não"
       }`,
@@ -120,17 +118,6 @@ export default function TerraBlumenauPage() {
       "noopener,noreferrer"
     );
     setSubmittedChannel("whatsapp");
-  };
-
-  const handleEmailSubmit = () => {
-    const subject = encodeURIComponent(
-      `[TERRA / BLUMENAU] Interesse Comercial - ${
-        leadCompany || leadName || "Investidor"
-      }`
-    );
-    const body = encodeURIComponent(buildLeadText());
-    window.location.href = `mailto:${BROKER_DATA.email}?subject=${subject}&body=${body}`;
-    setSubmittedChannel("email");
   };
 
   const aerialGallery = [
@@ -166,7 +153,7 @@ export default function TerraBlumenauPage() {
       tag: "VISÃO DA REGIÃO",
       title: "Terreno alto e com vista aberta no Bairro Fidélis",
       caption:
-        "Por estar em uma área mais alta (entre 30 e 60 metros de altitude), o terreno fica totalmente livre de enchentes e oferece uma excelente visibilidade na região norte da cidade.",
+        "Por estar em uma área mais alta (a partir de 30 metros de altitude), o terreno fica totalmente livre de enchentes e oferece uma excelente visibilidade na região norte da cidade.",
       highlights: [
         "100% fora de área de enchente",
         "Topografia que valoriza projetos residenciais ou comerciais",
@@ -368,7 +355,7 @@ export default function TerraBlumenauPage() {
                 Zero Enchente
               </div>
               <div className="text-xs text-[#E6DFD3]/70">
-                30m a 60m de altitude
+                A partir de 30 m de altitude
               </div>
             </div>
 
@@ -435,7 +422,7 @@ export default function TerraBlumenauPage() {
                 number: "03",
                 icon: ShieldCheck,
                 title: "100% Livre de Enchente",
-                metric: "30 m a 60 m de altitude",
+                metric: "A partir de 30 m de altitude",
                 description:
                   "Enquanto as enchentes em Blumenau atingem as cotas de 10 m e 12 m, a parte mais baixa deste terreno já começa em 30 m de altura — tranquilidade total em qualquer época.",
               },
@@ -751,14 +738,10 @@ export default function TerraBlumenauPage() {
               <div>
                 {/* Photo Slot 01 */}
                 <div className="relative h-52 w-full overflow-hidden bg-[#11221B] border-b border-[#C59B6D]/30">
-                  <img
-                    src="/media/placeholder-costela-adao.jpg"
-                    alt="Foto sugerida: Casa aconchegante com amplo deck e vista para a natureza"
-                    className="w-full h-full object-cover"
-                  />
+                  <SectionIllustration kind="house-deck" label="Ilustração: Casa aconchegante com amplo deck e vista para a natureza" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#152820] via-transparent to-black/30" />
                   <span className="absolute top-3 left-3 px-2.5 py-1 rounded bg-[#11221B]/90 border border-[#C59B6D]/60 text-[10px] font-semibold uppercase tracking-wider text-[#C59B6D]">
-                    Foto 01 · Casa com Deck & Sacada
+                    Casa com Deck
                   </span>
                 </div>
 
@@ -816,14 +799,10 @@ export default function TerraBlumenauPage() {
               <div>
                 {/* Photo Slot 02 */}
                 <div className="relative h-52 w-full overflow-hidden bg-[#11221B] border-b border-[#C59B6D]/30">
-                  <img
-                    src="/media/placeholder-costela-adao.jpg"
-                    alt="Foto sugerida: Estrutura externa aberta para eventos e jardim arborizado"
-                    className="w-full h-full object-cover"
-                  />
+                  <SectionIllustration kind="events-garden" label="Ilustração: Estrutura externa aberta para eventos e jardim arborizado" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#152820] via-transparent to-black/30" />
                   <span className="absolute top-3 left-3 px-2.5 py-1 rounded bg-[#11221B]/90 border border-[#C59B6D]/60 text-[10px] font-semibold uppercase tracking-wider text-[#C59B6D]">
-                    Foto 02 · Espaço de Eventos & Jardim
+                    Eventos & Jardim
                   </span>
                 </div>
 
@@ -882,14 +861,10 @@ export default function TerraBlumenauPage() {
               <div>
                 {/* Photo Slot 03 */}
                 <div className="relative h-52 w-full overflow-hidden bg-[#11221B] border-b border-[#C59B6D]/30">
-                  <img
-                    src="/media/placeholder-costela-adao.jpg"
-                    alt="Foto sugerida: Paisagismo, alameda interna e estacionamento para 30 carros"
-                    className="w-full h-full object-cover"
-                  />
+                  <SectionIllustration kind="old-house" label="Ilustração: Paisagismo, alameda interna e estacionamento para 30 carros" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#152820] via-transparent to-black/30" />
                   <span className="absolute top-3 left-3 px-2.5 py-1 rounded bg-[#11221B]/90 border border-[#C59B6D]/60 text-[10px] font-semibold uppercase tracking-wider text-[#C59B6D]">
-                    Foto 03 · Paisagismo & Área de Acesso
+                    Casa Antiga & Área Livre
                   </span>
                 </div>
 
@@ -1048,41 +1023,6 @@ export default function TerraBlumenauPage() {
                     </button>
                   </div>
 
-                  {/* Email */}
-                  <div className="rounded-lg flex items-center justify-between gap-3 bg-[#11221B]/70 border border-[#F7F5F0]/10 p-3.5">
-                    <div className="flex items-center gap-3">
-                      <Mail className="w-4 h-4 text-[#C59B6D] shrink-0" />
-                      <div>
-                        <div className="text-[11px] text-[#E6DFD3]/65">
-                          E-mail
-                        </div>
-                        <a
-                          href={`mailto:${BROKER_DATA.email}`}
-                          className="font-medium text-sm text-[#F7F5F0] hover:text-[#C59B6D] transition break-all"
-                        >
-                          {BROKER_DATA.email}
-                        </a>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => handleCopy(BROKER_DATA.email, "email")}
-                      className="rounded px-2.5 py-1 text-xs border border-[#F7F5F0]/20 text-[#E6DFD3] hover:border-[#C59B6D] transition cursor-pointer flex items-center gap-1"
-                    >
-                      {copiedField === "email" ? (
-                        <>
-                          <Check className="w-3 h-3 text-[#52B788]" />
-                          <span>Copiado</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3 h-3 text-[#C59B6D]" />
-                          <span>Copiar</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
-
                   {/* Location */}
                   <div className="rounded-lg flex items-center gap-3 bg-[#11221B]/70 border border-[#F7F5F0]/10 p-3.5">
                     <MapPin className="w-4 h-4 text-[#C59B6D] shrink-0" />
@@ -1178,24 +1118,6 @@ export default function TerraBlumenauPage() {
                       className="w-full bg-[#11221B] border border-[#F7F5F0]/20 px-4 py-3 text-sm text-[#F7F5F0] placeholder:text-[#E6DFD3]/35 focus:outline-none focus:border-[#C59B6D]"
                     />
                   </div>
-
-                  <div>
-                    <label
-                      htmlFor="lead-email"
-                      className="block text-xs font-medium text-[#E6DFD3]/90 mb-2"
-                    >
-                      E-mail *
-                    </label>
-                    <input
-                      id="lead-email"
-                      type="email"
-                      required
-                      value={leadEmail}
-                      onChange={(e) => setLeadEmail(e.target.value)}
-                      placeholder="seu@email.com.br"
-                      className="w-full bg-[#11221B] border border-[#F7F5F0]/20 px-4 py-3 text-sm text-[#F7F5F0] placeholder:text-[#E6DFD3]/35 focus:outline-none focus:border-[#C59B6D]"
-                    />
-                  </div>
                 </div>
 
                 <div>
@@ -1264,22 +1186,13 @@ export default function TerraBlumenauPage() {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div className="grid grid-cols-1 gap-3 pt-2">
                   <button
                     type="submit"
                     className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-[#C59B6D] text-[#11221B] text-xs uppercase tracking-[0.16em] font-bold hover:bg-[#d6b084] transition cursor-pointer"
                   >
                     <Send className="w-3.5 h-3.5" />
                     <span>Enviar pelo WhatsApp</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={handleEmailSubmit}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-4 border border-[#C59B6D]/50 text-[#F7F5F0] text-xs uppercase tracking-[0.16em] font-medium hover:bg-[#C59B6D]/15 transition cursor-pointer"
-                  >
-                    <Mail className="w-3.5 h-3.5 text-[#C59B6D]" />
-                    <span>Enviar por E-mail</span>
                   </button>
                 </div>
 
@@ -1313,7 +1226,7 @@ export default function TerraBlumenauPage() {
               </div>
               <div className="text-xs text-[#C59B6D] mt-1">
                 Corretor Responsável: {BROKER_DATA.name} · {BROKER_DATA.creci} ·{" "}
-                {BROKER_DATA.phoneDisplay} · {BROKER_DATA.email}
+                {BROKER_DATA.phoneDisplay}
               </div>
             </div>
           </div>
