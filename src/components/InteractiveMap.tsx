@@ -665,9 +665,9 @@ export default function InteractiveMap() {
       )}
 
       {/* Side-by-Side Ergonomic Layout on Desktop / Compact Stack on Mobile */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch isolate relative z-10">
         {/* Left Column (7 cols): Compact 2D Google Map */}
-        <div className="lg:col-span-7 relative h-[310px] sm:h-[370px] lg:h-[450px] w-full overflow-hidden rounded-xl border border-[#C59B6D]/30 bg-[#0F1F18] shadow-lg">
+        <div className="lg:col-span-7 isolate relative z-10 h-[310px] sm:h-[370px] lg:h-[450px] w-full overflow-hidden rounded-xl border border-[#C59B6D]/30 bg-[#0F1F18] shadow-lg">
           <div ref={mapContainerRef} className="h-full w-full" />
 
           {/* Floating Map Type Switcher (Top-Left inside Map) */}

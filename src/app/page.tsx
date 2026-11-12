@@ -136,6 +136,7 @@ export default function TerraBlumenauPage() {
   const aerialGallery = [
     {
       src: "/media/vista-aerea-br470.jpg",
+      buttonLabel: "01 · Acesso BR-470",
       tag: "LOCALIZAÇÃO E ACESSO",
       title: "Ao lado do trevo da BR-470",
       caption:
@@ -148,6 +149,7 @@ export default function TerraBlumenauPage() {
     },
     {
       src: "/media/drone-poster.jpg",
+      buttonLabel: "02 · Frente Principal",
       tag: "FRENTE PRINCIPAL",
       title: "Ampla frente na Rua 1º de Janeiro, nº 2.650",
       caption:
@@ -160,6 +162,7 @@ export default function TerraBlumenauPage() {
     },
     {
       src: "/media/drone-frame-end.jpg",
+      buttonLabel: "03 · Vista e Altitude",
       tag: "VISÃO DA REGIÃO",
       title: "Terreno alto e com vista aberta no Bairro Fidélis",
       caption:
@@ -173,17 +176,17 @@ export default function TerraBlumenauPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#11221B] text-[#F7F5F0] overflow-x-hidden">
-      {/* Top Fixed Editorial Navigation */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#11221B]/90 backdrop-blur-md border-b border-[#C59B6D]/25">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 h-20 flex items-center justify-between gap-4">
-          <a href="#topo" className="group flex items-center gap-4">
+    <div className="min-h-screen bg-[#11221B] text-[#F7F5F0] overflow-x-hidden antialiased selection:bg-[#C59B6D] selection:text-[#11221B]">
+      {/* Top Fixed Editorial Navigation (z-[1000] prevents map overlap) */}
+      <header className="fixed top-0 left-0 right-0 z-[1000] bg-[#11221B]/95 backdrop-blur-md border-b border-[#C59B6D]/25">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 sm:h-20 flex items-center justify-between gap-4">
+          <a href="#topo" className="group flex items-center gap-3.5">
             <div className="w-2.5 h-2.5 bg-[#C59B6D] rotate-45 group-hover:rotate-90 transition-transform duration-500" />
             <div>
-              <span className="font-serif text-xl sm:text-2xl tracking-[0.18em] text-[#F7F5F0] block leading-none">
+              <span className="font-serif text-lg sm:text-2xl tracking-[0.18em] text-[#F7F5F0] block leading-none">
                 TERRA <span className="text-[#C59B6D]">/</span> BLUMENAU
               </span>
-              <span className="text-[11px] tracking-wider text-[#E6DFD3]/75 block mt-1">
+              <span className="text-[10px] sm:text-[11px] tracking-wider text-[#E6DFD3]/70 block mt-1">
                 Rua 1º de Janeiro, 2.650 · 10.361 m²
               </span>
             </div>
@@ -191,7 +194,7 @@ export default function TerraBlumenauPage() {
 
           <nav
             aria-label="Navegação Principal"
-            className="hidden lg:flex items-center gap-7 text-xs font-medium uppercase tracking-[0.15em] text-[#E6DFD3]/85"
+            className="hidden lg:flex items-center gap-7 text-xs font-medium uppercase tracking-[0.14em] text-[#E6DFD3]/85"
           >
             <a href="#terreno" className="hover:text-[#C59B6D] transition">
               01. O Terreno
@@ -213,7 +216,7 @@ export default function TerraBlumenauPage() {
           <div className="flex items-center gap-3">
             <a
               href="#contato"
-              className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider bg-[#C59B6D] text-[#11221B] hover:bg-[#d6b084] transition"
+              className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-lg text-xs font-semibold uppercase tracking-wider bg-[#C59B6D] text-[#11221B] hover:bg-[#d6b084] transition"
             >
               <span>Falar com o Corretor</span>
               <ArrowUpRight className="w-4 h-4" />
@@ -222,11 +225,11 @@ export default function TerraBlumenauPage() {
         </div>
       </header>
 
-      {/* HERO SECTION (Vídeo leve de 1.5MB — 04s a 16s) */}
+      {/* HERO SECTION — Despoluída, com foco no vídeo e leitura imediata */}
       <section
         id="topo"
         ref={heroRef}
-        className="relative min-h-screen flex flex-col justify-between pt-28 pb-10 overflow-hidden border-b border-[#C59B6D]/30"
+        className="relative min-h-[92vh] flex flex-col justify-between pt-24 sm:pt-28 overflow-hidden border-b border-[#C59B6D]/30"
       >
         {/* Background Video */}
         <motion.div
@@ -244,58 +247,31 @@ export default function TerraBlumenauPage() {
             preload="metadata"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#11221B]/75 via-[#11221B]/45 to-[#11221B]/95" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_25%,#11221B_100%)] opacity-65" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#11221B]/90 via-[#11221B]/60 to-[#11221B]/35" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#11221B] via-transparent to-[#11221B]/60" />
         </motion.div>
 
-        {/* Top Bar inside Hero (Simple & Clean) */}
-        <div className="relative z-10 max-w-7xl w-full mx-auto px-5 sm:px-8 flex items-center justify-between gap-4">
-          <span className="px-3 py-1 bg-[#C59B6D]/25 border border-[#C59B6D]/60 text-[#F7F5F0] uppercase tracking-wider text-xs font-medium">
-            Oportunidade para Incorporadoras, Logística e Investidores
-          </span>
-
-          <button
-            type="button"
-            onClick={toggleVideo}
-            aria-label={isVideoPlaying ? "Pausar vídeo" : "Reproduzir vídeo"}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#11221B]/60 border border-[#F7F5F0]/25 text-xs text-[#E6DFD3] hover:border-[#C59B6D] transition cursor-pointer"
-          >
-            {isVideoPlaying ? (
-              <>
-                <Pause className="w-3.5 h-3.5 text-[#C59B6D]" />
-                <span>Pausar Vídeo</span>
-              </>
-            ) : (
-              <>
-                <Play className="w-3.5 h-3.5 text-[#C59B6D]" />
-                <span>Reproduzir Vídeo</span>
-              </>
-            )}
-          </button>
-        </div>
-
-        {/* Center Hero Title */}
-        <div className="relative z-10 max-w-7xl w-full mx-auto px-5 sm:px-8 my-auto py-12">
+        {/* Center Hero Content */}
+        <div className="relative z-10 max-w-7xl w-full mx-auto px-5 sm:px-8 my-auto py-14 sm:py-20">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-4xl"
+            className="max-w-3xl"
           >
-            <div className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-[#C59B6D]">
-              <span className="w-8 h-[1px] bg-[#C59B6D]" />
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#11221B]/75 border border-[#C59B6D]/45 backdrop-blur-md text-[11px] font-semibold uppercase tracking-[0.18em] text-[#C59B6D]">
+              <span className="w-2 h-2 rounded-full bg-[#C59B6D]" />
               <span>Blumenau · Bairro Fidélis · Ao lado da BR-470</span>
             </div>
 
-            <h1 className="font-serif text-5xl sm:text-7xl lg:text-8xl font-normal tracking-tight text-[#F7F5F0] leading-[1.02] mt-4">
-              10.361 m² prontos para
-              <br />
+            <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-[#F7F5F0] leading-[1.04] mt-6">
+              10.361 m² prontos para{" "}
               <span className="italic font-light text-[#E6DFD3]">
                 grandes projetos.
               </span>
             </h1>
 
-            <p className="mt-6 text-base sm:text-xl text-[#E6DFD3]/95 max-w-2xl font-light leading-relaxed">
+            <p className="mt-6 text-base sm:text-lg lg:text-xl text-[#E6DFD3]/90 max-w-2xl font-light leading-relaxed">
               Terreno amplo de esquina na{" "}
               <strong className="font-medium text-[#F7F5F0]">
                 Rua 1º de Janeiro, nº 2.650
@@ -304,14 +280,14 @@ export default function TerraBlumenauPage() {
               <strong className="font-medium text-[#C59B6D]">
                 220 metros do trevo da BR-470
               </strong>
-              . Área alta, 100% livre de enchentes e com vocação tanto para
-              galpões e empresas quanto para empreendimentos residenciais.
+              . Área alta, 100% livre de enchentes, com jardim formado e vocação
+              para empresas, galpões ou empreendimentos residenciais.
             </p>
 
-            <div className="mt-9 flex flex-wrap items-center gap-4">
+            <div className="mt-9 flex flex-wrap items-center gap-3.5">
               <a
                 href="#mapa"
-                className="inline-flex items-center gap-3 px-7 py-4 bg-[#C59B6D] text-[#11221B] text-xs uppercase tracking-[0.18em] font-bold hover:bg-[#d6b084] transition"
+                className="inline-flex items-center gap-3 px-6 sm:px-7 py-4 rounded-lg bg-[#C59B6D] text-[#11221B] text-xs uppercase tracking-[0.16em] font-bold hover:bg-[#d6b084] transition shadow-lg"
               >
                 <MapPin className="w-4 h-4" />
                 <span>Explorar Localização no Mapa</span>
@@ -319,74 +295,91 @@ export default function TerraBlumenauPage() {
 
               <a
                 href="#contato"
-                className="inline-flex items-center gap-3 px-7 py-4 bg-[#11221B]/75 backdrop-blur-md border border-[#F7F5F0]/35 text-[#F7F5F0] text-xs uppercase tracking-[0.18em] font-medium hover:border-[#C59B6D] transition"
+                className="inline-flex items-center gap-3 px-6 sm:px-7 py-4 rounded-lg bg-[#11221B]/80 backdrop-blur-md border border-[#F7F5F0]/30 text-[#F7F5F0] text-xs uppercase tracking-[0.16em] font-medium hover:border-[#C59B6D] transition"
               >
                 <Phone className="w-4 h-4 text-[#C59B6D]" />
-                <span>Falar com Robert Wolff</span>
+                <span>Falar com o Corretor</span>
               </a>
+
+              <button
+                type="button"
+                onClick={toggleVideo}
+                aria-label={isVideoPlaying ? "Pausar vídeo" : "Reproduzir vídeo"}
+                className="inline-flex items-center gap-2 px-4 py-4 rounded-lg bg-[#11221B]/60 backdrop-blur-md border border-[#F7F5F0]/20 text-xs text-[#E6DFD3]/85 hover:border-[#C59B6D] transition cursor-pointer"
+                title={isVideoPlaying ? "Pausar vídeo de fundo" : "Reproduzir vídeo de fundo"}
+              >
+                {isVideoPlaying ? (
+                  <Pause className="w-3.5 h-3.5 text-[#C59B6D]" />
+                ) : (
+                  <Play className="w-3.5 h-3.5 text-[#C59B6D]" />
+                )}
+                <span className="hidden sm:inline">
+                  {isVideoPlaying ? "Pausar Vídeo" : "Reproduzir"}
+                </span>
+              </button>
             </div>
           </motion.div>
         </div>
 
-        {/* Bottom Summary Highlights */}
-        <div className="relative z-10 max-w-7xl w-full mx-auto px-5 sm:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-5 border border-[#C59B6D]/35 bg-[#11221B]/85 backdrop-blur-md divide-y md:divide-y-0 md:divide-x divide-[#C59B6D]/25">
-            <div className="p-4 sm:p-5">
-              <div className="text-xs font-medium uppercase tracking-wider text-[#C59B6D]">
+        {/* Bottom Architectural Metrics Ribbon (Full-width grounded bar) */}
+        <div className="relative z-10 w-full border-t border-[#C59B6D]/30 bg-[#11221B]/90 backdrop-blur-md">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-2 md:grid-cols-5 divide-y md:divide-y-0 md:divide-x divide-[#C59B6D]/20">
+            <div className="py-4 sm:py-5 pr-4">
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-[#C59B6D]">
                 Área Total
               </div>
-              <div className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-1">
+              <div className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-0.5">
                 10.361 m²
               </div>
-              <div className="text-xs text-[#E6DFD3]/75 mt-0.5">
+              <div className="text-xs text-[#E6DFD3]/70">
                 Medida em planta oficial
               </div>
             </div>
 
-            <div className="p-4 sm:p-5">
-              <div className="text-xs font-medium uppercase tracking-wider text-[#C59B6D]">
+            <div className="py-4 sm:py-5 md:px-5">
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-[#C59B6D]">
                 Terreno de Esquina
               </div>
-              <div className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-1">
+              <div className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-0.5">
                 2 Frentes
               </div>
-              <div className="text-xs text-[#E6DFD3]/75 mt-0.5">
+              <div className="text-xs text-[#E6DFD3]/70">
                 R. 1º de Janeiro e R. Frieda Beck
               </div>
             </div>
 
-            <div className="p-4 sm:p-5">
-              <div className="text-xs font-medium uppercase tracking-wider text-[#C59B6D]">
+            <div className="py-4 sm:py-5 md:px-5">
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-[#C59B6D]">
                 Acesso à BR-470
               </div>
-              <div className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-1">
+              <div className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-0.5">
                 220 metros
               </div>
-              <div className="text-xs text-[#E6DFD3]/75 mt-0.5">
+              <div className="text-xs text-[#E6DFD3]/70">
                 Saída rápida para a rodovia
               </div>
             </div>
 
-            <div className="p-4 sm:p-5">
-              <div className="text-xs font-medium uppercase tracking-wider text-[#C59B6D]">
+            <div className="py-4 sm:py-5 md:px-5">
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-[#C59B6D]">
                 Segurança
               </div>
-              <div className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-1">
+              <div className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-0.5">
                 Zero Enchente
               </div>
-              <div className="text-xs text-[#E6DFD3]/75 mt-0.5">
+              <div className="text-xs text-[#E6DFD3]/70">
                 30m a 60m de altitude
               </div>
             </div>
 
-            <div className="p-4 sm:p-5 col-span-2 md:col-span-1">
-              <div className="text-xs font-medium uppercase tracking-wider text-[#C59B6D]">
+            <div className="py-4 sm:py-5 md:pl-5 col-span-2 md:col-span-1">
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-[#C59B6D]">
                 Valor de Venda
               </div>
-              <div className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-1">
+              <div className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-0.5">
                 Sob Consulta
               </div>
-              <div className="text-xs text-[#C59B6D] mt-0.5">
+              <div className="text-xs text-[#C59B6D]">
                 Negociação direta
               </div>
             </div>
@@ -394,23 +387,23 @@ export default function TerraBlumenauPage() {
         </div>
       </section>
 
-      {/* SEÇÃO 01 — APRESENTAÇÃO DO TERRENO (Com mais cor nos pilares e linguagem fácil) */}
+      {/* SEÇÃO 01 — APRESENTAÇÃO DO TERRENO */}
       <section
         id="terreno"
-        className="bg-[#F7F5F0] text-[#11221B] py-20 lg:py-28 border-b border-[#11221B]/15"
+        className="bg-[#F7F5F0] text-[#11221B] py-20 lg:py-24 border-b border-[#11221B]/15"
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           {/* Section Header */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end border-b border-[#11221B]/15 pb-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end border-b border-[#11221B]/15 pb-8">
             <div className="lg:col-span-7">
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#8C6239] block">
                 01 · Por que investir neste terreno
               </span>
-              <h2 className="font-serif text-4xl sm:text-5xl text-[#11221B] mt-3 leading-[1.08]">
+              <h2 className="font-serif text-3xl sm:text-5xl text-[#11221B] mt-2 leading-[1.08]">
                 Localização estratégica, espaço de sobra e segurança total.
               </h2>
             </div>
-            <div className="lg:col-span-5 text-base text-[#11221B]/80 leading-relaxed">
+            <div className="lg:col-span-5 text-sm sm:text-base text-[#11221B]/80 leading-relaxed">
               Encontrar um terreno de <strong>mais de 10.000 m²</strong> já
               inserido na área urbana de Blumenau, colado na{" "}
               <strong>BR-470</strong> e totalmente livre de enchentes é uma
@@ -419,8 +412,8 @@ export default function TerraBlumenauPage() {
             </div>
           </div>
 
-          {/* 4 Pillars in Terra / Blumenau Palette (Deep Green + Bronze + Sand + Off-White) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+          {/* 4 Pillars */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
             {[
               {
                 number: "01",
@@ -463,14 +456,14 @@ export default function TerraBlumenauPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{ duration: 0.5, delay: idx * 0.08 }}
-                  className="bg-[#152820] border border-[#11221B] border-t-2 border-t-[#C59B6D] p-6 shadow-md hover:bg-[#182E25] transition flex flex-col justify-between text-[#F7F5F0]"
+                  className="rounded-xl bg-[#152820] border border-[#11221B] border-t-2 border-t-[#C59B6D] p-6 shadow-md hover:bg-[#182E25] transition flex flex-col justify-between text-[#F7F5F0]"
                 >
                   <div>
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#C59B6D]">
                         Diferencial {pillar.number}
                       </span>
-                      <div className="w-10 h-10 bg-[#11221B] border border-[#C59B6D]/40 flex items-center justify-center text-[#C59B6D]">
+                      <div className="w-10 h-10 rounded-lg bg-[#11221B] border border-[#C59B6D]/40 flex items-center justify-center text-[#C59B6D]">
                         <Icon className="w-5 h-5" />
                       </div>
                     </div>
@@ -479,7 +472,7 @@ export default function TerraBlumenauPage() {
                       {pillar.title}
                     </h3>
 
-                    <div className="inline-block mt-3 px-3 py-1 bg-[#C59B6D]/15 border border-[#C59B6D]/45 text-[#C59B6D] text-xs font-semibold tracking-wide">
+                    <div className="inline-block mt-3 px-3 py-1 rounded bg-[#C59B6D]/15 border border-[#C59B6D]/45 text-[#C59B6D] text-xs font-semibold tracking-wide">
                       {pillar.metric}
                     </div>
 
@@ -493,13 +486,13 @@ export default function TerraBlumenauPage() {
           </div>
 
           {/* Simplified Aerial Visual Inspection */}
-          <div className="mt-16 bg-[#E6DFD3] border border-[#11221B]/15 p-6 lg:p-10">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-[#11221B]/15">
+          <div className="mt-14 rounded-2xl bg-[#E6DFD3] border border-[#11221B]/15 p-6 lg:p-8 shadow-sm">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-[#11221B]/15">
               <div>
                 <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#8C6239] block">
                   Vista Aérea do Local
                 </span>
-                <h3 className="font-serif text-3xl text-[#11221B] mt-1">
+                <h3 className="font-serif text-2xl sm:text-3xl text-[#11221B] mt-1">
                   Veja o terreno e a proximidade com a BR-470
                 </h3>
               </div>
@@ -510,34 +503,34 @@ export default function TerraBlumenauPage() {
                     key={item.src}
                     type="button"
                     onClick={() => setActivePhotoIndex(idx)}
-                    className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider border transition cursor-pointer ${
+                    className={`px-3.5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider border transition cursor-pointer ${
                       activePhotoIndex === idx
                         ? "bg-[#11221B] text-[#F7F5F0] border-[#11221B]"
                         : "bg-[#F7F5F0] text-[#11221B] border-[#11221B]/20 hover:border-[#8C6239]"
                     }`}
                   >
-                    Foto 0{idx + 1}
+                    {item.buttonLabel}
                   </button>
                 ))}
               </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-6 items-center">
-              <div className="lg:col-span-8 relative overflow-hidden border border-[#11221B]/20 bg-[#11221B]">
+              <div className="lg:col-span-8 relative rounded-xl overflow-hidden border border-[#11221B]/20 bg-[#11221B]">
                 <img
                   src={aerialGallery[activePhotoIndex].src}
                   alt={aerialGallery[activePhotoIndex].title}
-                  className="w-full h-[320px] sm:h-[440px] object-cover transition-all duration-500"
+                  className="w-full h-[300px] sm:h-[420px] object-cover transition-all duration-500"
                 />
                 {activePhotoIndex === 0 && (
                   <>
-                    <div className="absolute top-[24%] left-[52%] -translate-x-1/2 bg-[#11221B]/90 backdrop-blur-md border border-[#C59B6D] px-3 py-1.5 text-xs font-medium text-[#F7F5F0] shadow-lg">
+                    <div className="absolute top-[24%] left-[52%] -translate-x-1/2 rounded-md bg-[#11221B]/90 backdrop-blur-md border border-[#C59B6D] px-3 py-1.5 text-xs font-medium text-[#F7F5F0] shadow-lg">
                       <span className="text-[#C59B6D] font-bold">
                         ↑ RODOVIA BR-470
                       </span>{" "}
                       · A apenas 220 m
                     </div>
-                    <div className="absolute bottom-[12%] left-[44%] -translate-x-1/2 bg-[#11221B]/90 backdrop-blur-md border border-[#F4D06F] px-3 py-1.5 text-xs font-medium text-[#F7F5F0] shadow-lg">
+                    <div className="absolute bottom-[12%] left-[44%] -translate-x-1/2 rounded-md bg-[#11221B]/90 backdrop-blur-md border border-[#F4D06F] px-3 py-1.5 text-xs font-medium text-[#F7F5F0] shadow-lg">
                       <span className="text-[#F4D06F] font-bold">
                         ↓ FRENTE DO TERRENO
                       </span>{" "}
@@ -549,10 +542,10 @@ export default function TerraBlumenauPage() {
 
               <div className="lg:col-span-4 space-y-5">
                 <div>
-                  <span className="inline-block px-2.5 py-1 bg-[#11221B] text-[#C59B6D] text-[11px] font-semibold uppercase tracking-wider">
+                  <span className="inline-block px-2.5 py-1 rounded bg-[#11221B] text-[#C59B6D] text-[11px] font-semibold uppercase tracking-wider">
                     {aerialGallery[activePhotoIndex].tag}
                   </span>
-                  <h4 className="font-serif text-3xl text-[#11221B] mt-3 leading-snug">
+                  <h4 className="font-serif text-2xl sm:text-3xl text-[#11221B] mt-3 leading-snug">
                     {aerialGallery[activePhotoIndex].title}
                   </h4>
                   <p className="text-sm sm:text-base text-[#11221B]/80 mt-3 leading-relaxed">
@@ -560,7 +553,7 @@ export default function TerraBlumenauPage() {
                   </p>
                 </div>
 
-                <div className="bg-[#152820] border border-[#C59B6D]/35 p-5 space-y-2.5 text-[#F7F5F0]">
+                <div className="rounded-xl bg-[#152820] border border-[#C59B6D]/35 p-5 space-y-2.5 text-[#F7F5F0]">
                   <div className="text-xs font-bold uppercase tracking-wider text-[#C59B6D]">
                     Destaques desta vista
                   </div>
@@ -611,28 +604,22 @@ export default function TerraBlumenauPage() {
         className="bg-[#162921] text-[#F7F5F0] py-16 lg:py-24 border-b border-[#C59B6D]/25"
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-8">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#C59B6D] block">
-                03 · Planta Técnica 2D & Zoneamento
-              </span>
-              <h2 className="font-serif text-3xl sm:text-5xl text-[#F7F5F0] mt-2 leading-[1.08]">
-                Planta Planialtimétrica e Potencial de Uso.
-              </h2>
-            </div>
-            <p className="text-sm text-[#E6DFD3]/80 lg:max-w-sm">
-              Desenho técnico oficial com alinhamento das ruas, medidas de
-              perímetro, curvas de nível e zoneamento municipal.
-            </p>
+          <div className="mb-8">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#C59B6D] block">
+              03 · Planta Técnica 2D & Zoneamento
+            </span>
+            <h2 className="font-serif text-3xl sm:text-5xl text-[#F7F5F0] mt-2 leading-[1.08]">
+              Planta Planialtimétrica e Potencial de Uso.
+            </h2>
           </div>
 
-          {/* 2D Technical CAD Blueprint */}
+          {/* Static 2D Technical CAD Blueprint */}
           <TopographicBlueprint />
 
           {/* Zoning & On-Request Dossier (Side by Side, Clean & Direct) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-8">
             {/* Zoning Cards */}
-            <div className="lg:col-span-7 bg-[#11221B] border border-[#C59B6D]/25 p-6 lg:p-8">
+            <div className="lg:col-span-7 rounded-xl bg-[#11221B] border border-[#C59B6D]/25 p-6 lg:p-8">
               <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#C59B6D] block">
                 Zoneamento Municipal (Prefeitura de Blumenau)
               </span>
@@ -640,15 +627,15 @@ export default function TerraBlumenauPage() {
                 Duas zonas que ampliam as possibilidades do terreno
               </h3>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
                 {PROPERTY_SUMMARY.zoning.zones.map((zone) => (
                   <div
                     key={zone.code}
-                    className="p-5 bg-[#162921] border border-[#C59B6D]/25 flex flex-col justify-between"
+                    className="rounded-lg p-5 bg-[#162921] border border-[#C59B6D]/25 flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex items-center justify-between">
-                        <span className="px-3 py-1 bg-[#C59B6D] text-[#11221B] text-xs font-bold">
+                        <span className="px-3 py-1 rounded bg-[#C59B6D] text-[#11221B] text-xs font-bold">
                           {zone.code}
                         </span>
                         <span className="text-xs text-[#E6DFD3]/80">
@@ -671,7 +658,7 @@ export default function TerraBlumenauPage() {
             </div>
 
             {/* Matrícula & Condicionantes Técnicos (WhatsApp Request + Temporary Owner Edit Button) */}
-            <div className="lg:col-span-5 bg-[#1D352B] border border-[#C59B6D]/45 p-6 lg:p-8 flex flex-col justify-between">
+            <div className="lg:col-span-5 rounded-xl bg-[#1D352B] border border-[#C59B6D]/45 p-6 lg:p-8 flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#C59B6D]">
                   <Lock className="w-4 h-4" />
@@ -695,14 +682,14 @@ export default function TerraBlumenauPage() {
                   href={BROKER_DATA.dossierWhatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-4 bg-[#C59B6D] text-[#11221B] text-xs uppercase tracking-[0.18em] font-bold hover:bg-[#d6b084] transition"
+                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-4 rounded-lg bg-[#C59B6D] text-[#11221B] text-xs uppercase tracking-[0.18em] font-bold hover:bg-[#d6b084] transition"
                 >
                   <Phone className="w-4 h-4" />
                   <span>Solicitar Dossiê Completo via WhatsApp</span>
                 </a>
 
                 {/* Temporary Owner Preview Notice */}
-                <div className="p-3.5 bg-[#11221B]/90 border border-amber-400/50 text-xs text-amber-200/90 space-y-2">
+                <div className="rounded-lg p-3.5 bg-[#11221B]/90 border border-amber-400/50 text-xs text-amber-200/90 space-y-2">
                   <div className="flex items-center gap-2 font-semibold text-amber-300">
                     <AlertTriangle className="w-4 h-4 shrink-0" />
                     <span>Acesso Interno (Ajustar antes do lançamento)</span>
@@ -715,7 +702,7 @@ export default function TerraBlumenauPage() {
                   </p>
                   <Link
                     href="/dossie-tecnico"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-400/15 border border-amber-400/50 text-amber-200 text-[11px] font-medium hover:bg-amber-400/25 transition"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-amber-400/15 border border-amber-400/50 text-amber-200 text-[11px] font-medium hover:bg-amber-400/25 transition"
                   >
                     <FileText className="w-3.5 h-3.5" />
                     <span>Ver / Editar Página do Dossiê Técnico →</span>
@@ -727,23 +714,23 @@ export default function TerraBlumenauPage() {
         </div>
       </section>
 
-      {/* SEÇÃO 04 — O QUE JÁ EXISTE NO TERRENO (Benfeitorias, Jardim, Eventos & Airbnb) */}
+      {/* SEÇÃO 04 — O QUE JÁ EXISTE NO TERRENO (Com fotos placeholder Costela-de-Adão indicando as fotos reais) */}
       <section
         id="estrutura"
-        className="bg-[#F7F5F0] text-[#11221B] py-20 lg:py-28 border-b border-[#11221B]/15"
+        className="bg-[#F7F5F0] text-[#11221B] py-20 lg:py-24 border-b border-[#11221B]/15"
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           {/* Header */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end border-b border-[#11221B]/15 pb-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end border-b border-[#11221B]/15 pb-8">
             <div className="lg:col-span-7">
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#8C6239] block">
                 04 · O Que Já Existe no Terreno
               </span>
-              <h2 className="font-serif text-4xl sm:text-5xl text-[#11221B] mt-3 leading-[1.08]">
+              <h2 className="font-serif text-3xl sm:text-5xl text-[#11221B] mt-2 leading-[1.08]">
                 Jardim formado, espaço de eventos ativo e casa pronta para Airbnb.
               </h2>
             </div>
-            <div className="lg:col-span-5 text-base text-[#11221B]/80 leading-relaxed">
+            <div className="lg:col-span-5 text-sm sm:text-base text-[#11221B]/80 leading-relaxed">
               Mais do que uma área bruta, a propriedade já conta com um{" "}
               <strong>belo jardim arborizado</strong>, uma estrutura aberta que{" "}
               <strong>já gera renda com eventos</strong> e duas construções com
@@ -751,55 +738,68 @@ export default function TerraBlumenauPage() {
             </div>
           </div>
 
-          {/* 3 Existing Structures / Features Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-12">
+          {/* 3 Existing Structures / Features Cards with Photo Slots */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-10">
             {/* 1. Casa Aconchegante com Deck (Airbnb) */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5 }}
-              className="bg-[#152820] border border-[#11221B] border-t-2 border-t-[#C59B6D] p-7 shadow-md flex flex-col justify-between text-[#F7F5F0]"
+              className="rounded-xl overflow-hidden bg-[#152820] border border-[#11221B] shadow-md flex flex-col justify-between text-[#F7F5F0]"
             >
               <div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#C59B6D]">
-                    Construção 01 · Pronta para Uso
+                {/* Photo Slot 01 */}
+                <div className="relative h-52 w-full overflow-hidden bg-[#11221B] border-b border-[#C59B6D]/30">
+                  <img
+                    src="/media/placeholder-costela-adao.jpg"
+                    alt="Foto sugerida: Casa aconchegante com amplo deck e vista para a natureza"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#152820] via-transparent to-black/30" />
+                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded bg-[#11221B]/90 border border-[#C59B6D]/60 text-[10px] font-semibold uppercase tracking-wider text-[#C59B6D]">
+                    Foto 01 · Casa com Deck & Sacada
                   </span>
-                  <div className="w-10 h-10 bg-[#11221B] border border-[#C59B6D]/40 flex items-center justify-center text-[#C59B6D]">
-                    <Sparkles className="w-5 h-5" />
+                </div>
+
+                <div className="p-6 pb-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#C59B6D]">
+                      Construção 01 · Pronta para Uso
+                    </span>
+                    <Sparkles className="w-4 h-4 text-[#C59B6D]" />
                   </div>
+
+                  <h3 className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-2 font-normal">
+                    Casa Aconchegante com Amplo Deck
+                  </h3>
+
+                  <div className="inline-block mt-2.5 px-3 py-1 rounded bg-[#C59B6D]/15 border border-[#C59B6D]/45 text-[#C59B6D] text-xs font-semibold tracking-wide">
+                    Ideal para Airbnb ou Hospedagem
+                  </div>
+
+                  <p className="text-sm text-[#E6DFD3]/90 mt-4 leading-relaxed">
+                    Residência super charmosa e bem conservada com{" "}
+                    <strong className="text-[#F7F5F0]">1 quarto</strong>,{" "}
+                    <strong className="text-[#F7F5F0]">1 banheiro</strong> e{" "}
+                    <strong className="text-[#F7F5F0]">
+                      sala e cozinha integradas
+                    </strong>{" "}
+                    a uma sacada externa com amplo deck de madeira. Pela sua
+                    integração total com a natureza do terreno, está pronta para
+                    começar a render imediatamente no <strong>Airbnb</strong>.
+                  </p>
                 </div>
-
-                <h3 className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-4 font-normal">
-                  Casa Aconchegante com Amplo Deck
-                </h3>
-
-                <div className="inline-block mt-3 px-3 py-1 bg-[#C59B6D]/15 border border-[#C59B6D]/45 text-[#C59B6D] text-xs font-semibold tracking-wide">
-                  Ideal para Airbnb ou Hospedagem
-                </div>
-
-                <p className="text-sm text-[#E6DFD3]/90 mt-4 leading-relaxed">
-                  Residência super charmosa e bem conservada com{" "}
-                  <strong className="text-[#F7F5F0]">1 quarto</strong>,{" "}
-                  <strong className="text-[#F7F5F0]">1 banheiro</strong> e{" "}
-                  <strong className="text-[#F7F5F0]">
-                    sala e cozinha integradas
-                  </strong>{" "}
-                  a uma sacada externa com amplo deck de madeira. Pela sua
-                  integração total com a natureza do terreno, está pronta para
-                  começar a render imediatamente no <strong>Airbnb</strong>.
-                </p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-[#F7F5F0]/12 flex flex-wrap gap-2 text-[11px] text-[#E6DFD3]/80">
-                <span className="px-2.5 py-1 bg-[#11221B] border border-[#C59B6D]/25">
+              <div className="px-6 pb-6 pt-4 border-t border-[#F7F5F0]/12 flex flex-wrap gap-2 text-[11px] text-[#E6DFD3]/80">
+                <span className="px-2.5 py-1 rounded bg-[#11221B] border border-[#C59B6D]/25">
                   1 Quarto + 1 Banheiro
                 </span>
-                <span className="px-2.5 py-1 bg-[#11221B] border border-[#C59B6D]/25">
+                <span className="px-2.5 py-1 rounded bg-[#11221B] border border-[#C59B6D]/25">
                   Sala & Cozinha Integradas
                 </span>
-                <span className="px-2.5 py-1 bg-[#11221B] border border-[#C59B6D]/25">
+                <span className="px-2.5 py-1 rounded bg-[#11221B] border border-[#C59B6D]/25">
                   Sacada & Amplo Deck
                 </span>
               </div>
@@ -811,48 +811,61 @@ export default function TerraBlumenauPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: 0.08 }}
-              className="bg-[#152820] border border-[#11221B] border-t-2 border-t-[#C59B6D] p-7 shadow-md flex flex-col justify-between text-[#F7F5F0]"
+              className="rounded-xl overflow-hidden bg-[#152820] border border-[#11221B] shadow-md flex flex-col justify-between text-[#F7F5F0]"
             >
               <div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#C59B6D]">
-                    Natureza & Eventos · Operação Ativa
+                {/* Photo Slot 02 */}
+                <div className="relative h-52 w-full overflow-hidden bg-[#11221B] border-b border-[#C59B6D]/30">
+                  <img
+                    src="/media/placeholder-costela-adao.jpg"
+                    alt="Foto sugerida: Estrutura externa aberta para eventos e jardim arborizado"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#152820] via-transparent to-black/30" />
+                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded bg-[#11221B]/90 border border-[#C59B6D]/60 text-[10px] font-semibold uppercase tracking-wider text-[#C59B6D]">
+                    Foto 02 · Espaço de Eventos & Jardim
                   </span>
-                  <div className="w-10 h-10 bg-[#11221B] border border-[#C59B6D]/40 flex items-center justify-center text-[#C59B6D]">
-                    <Trees className="w-5 h-5" />
+                </div>
+
+                <div className="p-6 pb-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#C59B6D]">
+                      Natureza & Eventos · Operação Ativa
+                    </span>
+                    <Trees className="w-4 h-4 text-[#C59B6D]" />
                   </div>
+
+                  <h3 className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-2 font-normal">
+                    Espaço para Eventos & Belo Jardim
+                  </h3>
+
+                  <div className="inline-block mt-2.5 px-3 py-1 rounded bg-[#C59B6D]/15 border border-[#C59B6D]/45 text-[#C59B6D] text-xs font-semibold tracking-wide">
+                    Estacionamento para ~30 carros
+                  </div>
+
+                  <p className="text-sm text-[#E6DFD3]/90 mt-4 leading-relaxed">
+                    O terreno conta com uma{" "}
+                    <strong className="text-[#F7F5F0]">
+                      estrutura externa aberta
+                    </strong>{" "}
+                    preparada para eventos de médio porte em meio à natureza —
+                    atualmente já alugada pelo proprietário para{" "}
+                    <strong className="text-[#F7F5F0]">
+                      eventos familiares e corporativos
+                    </strong>
+                    . Tudo cercado por um jardim maduro com grande diversidade de
+                    plantas e estacionamento próprio para cerca de{" "}
+                    <strong className="text-[#F7F5F0]">30 veículos</strong>.
+                  </p>
                 </div>
-
-                <h3 className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-4 font-normal">
-                  Espaço para Eventos & Belo Jardim
-                </h3>
-
-                <div className="inline-block mt-3 px-3 py-1 bg-[#C59B6D]/15 border border-[#C59B6D]/45 text-[#C59B6D] text-xs font-semibold tracking-wide">
-                  Estacionamento para ~30 carros
-                </div>
-
-                <p className="text-sm text-[#E6DFD3]/90 mt-4 leading-relaxed">
-                  O terreno conta com uma{" "}
-                  <strong className="text-[#F7F5F0]">
-                    estrutura externa aberta
-                  </strong>{" "}
-                  preparada para eventos de médio porte em meio à natureza —
-                  atualmente já alugada pelo proprietário para{" "}
-                  <strong className="text-[#F7F5F0]">
-                    eventos familiares e corporativos
-                  </strong>
-                  . Tudo cercado por um jardim maduro com grande diversidade de
-                  plantas e estacionamento próprio para cerca de{" "}
-                  <strong className="text-[#F7F5F0]">30 veículos</strong>.
-                </p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-[#F7F5F0]/12 flex flex-wrap gap-2 text-[11px] text-[#E6DFD3]/80">
-                <span className="px-2.5 py-1 bg-[#11221B] border border-[#C59B6D]/25 flex items-center gap-1">
+              <div className="px-6 pb-6 pt-4 border-t border-[#F7F5F0]/12 flex flex-wrap gap-2 text-[11px] text-[#E6DFD3]/80">
+                <span className="px-2.5 py-1 rounded bg-[#11221B] border border-[#C59B6D]/25 flex items-center gap-1">
                   <Calendar className="w-3 h-3 text-[#C59B6D]" /> Eventos
                   Familiares & Corporativos
                 </span>
-                <span className="px-2.5 py-1 bg-[#11221B] border border-[#C59B6D]/25 flex items-center gap-1">
+                <span className="px-2.5 py-1 rounded bg-[#11221B] border border-[#C59B6D]/25 flex items-center gap-1">
                   <Car className="w-3 h-3 text-[#C59B6D]" /> ~30 Vagas Internas
                 </span>
               </div>
@@ -864,43 +877,56 @@ export default function TerraBlumenauPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: 0.16 }}
-              className="bg-[#152820] border border-[#11221B] border-t-2 border-t-[#C59B6D] p-7 shadow-md flex flex-col justify-between text-[#F7F5F0]"
+              className="rounded-xl overflow-hidden bg-[#152820] border border-[#11221B] shadow-md flex flex-col justify-between text-[#F7F5F0]"
             >
               <div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#C59B6D]">
-                    Construção 02 · Área Livre para Projeto
+                {/* Photo Slot 03 */}
+                <div className="relative h-52 w-full overflow-hidden bg-[#11221B] border-b border-[#C59B6D]/30">
+                  <img
+                    src="/media/placeholder-costela-adao.jpg"
+                    alt="Foto sugerida: Paisagismo, alameda interna e estacionamento para 30 carros"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#152820] via-transparent to-black/30" />
+                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded bg-[#11221B]/90 border border-[#C59B6D]/60 text-[10px] font-semibold uppercase tracking-wider text-[#C59B6D]">
+                    Foto 03 · Paisagismo & Área de Acesso
                   </span>
-                  <div className="w-10 h-10 bg-[#11221B] border border-[#C59B6D]/40 flex items-center justify-center text-[#C59B6D]">
-                    <Home className="w-5 h-5" />
+                </div>
+
+                <div className="p-6 pb-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#C59B6D]">
+                      Construção 02 · Área Livre para Projeto
+                    </span>
+                    <Home className="w-4 h-4 text-[#C59B6D]" />
                   </div>
+
+                  <h3 className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-2 font-normal">
+                    Segunda Casa (Pronta para Desocupação)
+                  </h3>
+
+                  <div className="inline-block mt-2.5 px-3 py-1 rounded bg-[#C59B6D]/15 border border-[#C59B6D]/45 text-[#C59B6D] text-xs font-semibold tracking-wide">
+                    Sem amarras para demolição ou obra
+                  </div>
+
+                  <p className="text-sm text-[#E6DFD3]/90 mt-4 leading-relaxed">
+                    Com total transparência: a segunda casa existente no terreno{" "}
+                    <strong className="text-[#F7F5F0]">
+                      já viu dias melhores
+                    </strong>{" "}
+                    e está pronta para ser desocupada. Para construtoras ou
+                    empresas, isso significa liberdade imediata para demolir e
+                    limpar o setor frontal sem custo emocional, ou adaptá-la como
+                    canteiro e apoio de obra.
+                  </p>
                 </div>
-
-                <h3 className="font-serif text-2xl sm:text-3xl text-[#F7F5F0] mt-4 font-normal">
-                  Segunda Casa (Pronta para Desocupação)
-                </h3>
-
-                <div className="inline-block mt-3 px-3 py-1 bg-[#C59B6D]/15 border border-[#C59B6D]/45 text-[#C59B6D] text-xs font-semibold tracking-wide">
-                  Sem amarras para demolição ou obra
-                </div>
-
-                <p className="text-sm text-[#E6DFD3]/90 mt-4 leading-relaxed">
-                  Com total transparência: a segunda casa existente no terreno{" "}
-                  <strong className="text-[#F7F5F0]">
-                    já viu dias melhores
-                  </strong>{" "}
-                  e está pronta para ser desocupada. Para construtoras ou
-                  empresas, isso significa liberdade imediata para demolir e
-                  limpar o setor frontal sem custo emocional, ou adaptá-la como
-                  canteiro e apoio de obra.
-                </p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-[#F7F5F0]/12 flex flex-wrap gap-2 text-[11px] text-[#E6DFD3]/80">
-                <span className="px-2.5 py-1 bg-[#11221B] border border-[#C59B6D]/25">
+              <div className="px-6 pb-6 pt-4 border-t border-[#F7F5F0]/12 flex flex-wrap gap-2 text-[11px] text-[#E6DFD3]/80">
+                <span className="px-2.5 py-1 rounded bg-[#11221B] border border-[#C59B6D]/25">
                   Pronta para Desocupar
                 </span>
-                <span className="px-2.5 py-1 bg-[#11221B] border border-[#C59B6D]/25">
+                <span className="px-2.5 py-1 rounded bg-[#11221B] border border-[#C59B6D]/25">
                   Facilidade para Nova Implantação
                 </span>
               </div>
@@ -908,7 +934,7 @@ export default function TerraBlumenauPage() {
           </div>
 
           {/* Investor Value Callout Banner */}
-          <div className="mt-10 bg-[#E6DFD3] border border-[#11221B]/15 p-6 lg:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="mt-8 rounded-2xl bg-[#E6DFD3] border border-[#11221B]/15 p-6 lg:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             <div className="max-w-3xl">
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#8C6239] block">
                 Vantagem Estratégica para o Comprador
@@ -928,7 +954,7 @@ export default function TerraBlumenauPage() {
             <div className="shrink-0">
               <a
                 href="#contato"
-                className="inline-flex items-center gap-2.5 px-6 py-4 bg-[#11221B] text-[#F7F5F0] text-xs uppercase tracking-[0.18em] font-bold hover:bg-[#1D352B] transition"
+                className="inline-flex items-center gap-2.5 px-6 py-4 rounded-lg bg-[#11221B] text-[#F7F5F0] text-xs uppercase tracking-[0.18em] font-bold hover:bg-[#1D352B] transition"
               >
                 <Phone className="w-4 h-4 text-[#C59B6D]" />
                 <span>Agendar Visita Presencial</span>
@@ -961,9 +987,9 @@ export default function TerraBlumenauPage() {
               </div>
 
               {/* Broker Official Card */}
-              <div className="bg-[#162B22] border border-[#C59B6D]/45 p-8 relative overflow-hidden">
+              <div className="rounded-xl bg-[#162B22] border border-[#C59B6D]/45 p-7 sm:p-8 relative overflow-hidden shadow-lg">
                 <div className="flex flex-col sm:flex-row sm:items-center gap-6 border-b border-[#F7F5F0]/12 pb-6">
-                  <div className="bg-[#11221B] border border-[#C59B6D]/35 px-5 py-4 flex items-center justify-center shrink-0">
+                  <div className="rounded-lg bg-[#11221B] border border-[#C59B6D]/35 px-5 py-4 flex items-center justify-center shrink-0">
                     <RWLogo className="h-16" variant="light" />
                   </div>
                   <div>
@@ -982,9 +1008,9 @@ export default function TerraBlumenauPage() {
                   </div>
                 </div>
 
-                <div className="space-y-4 mt-6 text-sm">
+                <div className="space-y-3.5 mt-6 text-sm">
                   {/* Phone / WhatsApp */}
-                  <div className="flex items-center justify-between gap-3 bg-[#11221B]/70 border border-[#F7F5F0]/10 p-3.5">
+                  <div className="rounded-lg flex items-center justify-between gap-3 bg-[#11221B]/70 border border-[#F7F5F0]/10 p-3.5">
                     <div className="flex items-center gap-3">
                       <Phone className="w-4 h-4 text-[#C59B6D] shrink-0" />
                       <div>
@@ -1006,7 +1032,7 @@ export default function TerraBlumenauPage() {
                       onClick={() =>
                         handleCopy(BROKER_DATA.phoneDisplay, "phone")
                       }
-                      className="px-2.5 py-1 text-xs border border-[#F7F5F0]/20 text-[#E6DFD3] hover:border-[#C59B6D] transition cursor-pointer flex items-center gap-1"
+                      className="rounded px-2.5 py-1 text-xs border border-[#F7F5F0]/20 text-[#E6DFD3] hover:border-[#C59B6D] transition cursor-pointer flex items-center gap-1"
                     >
                       {copiedField === "phone" ? (
                         <>
@@ -1023,7 +1049,7 @@ export default function TerraBlumenauPage() {
                   </div>
 
                   {/* Email */}
-                  <div className="flex items-center justify-between gap-3 bg-[#11221B]/70 border border-[#F7F5F0]/10 p-3.5">
+                  <div className="rounded-lg flex items-center justify-between gap-3 bg-[#11221B]/70 border border-[#F7F5F0]/10 p-3.5">
                     <div className="flex items-center gap-3">
                       <Mail className="w-4 h-4 text-[#C59B6D] shrink-0" />
                       <div>
@@ -1041,7 +1067,7 @@ export default function TerraBlumenauPage() {
                     <button
                       type="button"
                       onClick={() => handleCopy(BROKER_DATA.email, "email")}
-                      className="px-2.5 py-1 text-xs border border-[#F7F5F0]/20 text-[#E6DFD3] hover:border-[#C59B6D] transition cursor-pointer flex items-center gap-1"
+                      className="rounded px-2.5 py-1 text-xs border border-[#F7F5F0]/20 text-[#E6DFD3] hover:border-[#C59B6D] transition cursor-pointer flex items-center gap-1"
                     >
                       {copiedField === "email" ? (
                         <>
@@ -1058,7 +1084,7 @@ export default function TerraBlumenauPage() {
                   </div>
 
                   {/* Location */}
-                  <div className="flex items-center gap-3 bg-[#11221B]/70 border border-[#F7F5F0]/10 p-3.5">
+                  <div className="rounded-lg flex items-center gap-3 bg-[#11221B]/70 border border-[#F7F5F0]/10 p-3.5">
                     <MapPin className="w-4 h-4 text-[#C59B6D] shrink-0" />
                     <div>
                       <div className="text-[11px] text-[#E6DFD3]/65">
@@ -1076,7 +1102,7 @@ export default function TerraBlumenauPage() {
                     href={BROKER_DATA.whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-4 bg-[#C59B6D] text-[#11221B] text-xs uppercase tracking-[0.18em] font-bold hover:bg-[#d6b084] transition"
+                    className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-lg bg-[#C59B6D] text-[#11221B] text-xs uppercase tracking-[0.18em] font-bold hover:bg-[#d6b084] transition"
                   >
                     <Phone className="w-4 h-4" />
                     <span>Chamar no WhatsApp Agora</span>
@@ -1086,7 +1112,7 @@ export default function TerraBlumenauPage() {
             </div>
 
             {/* Right Column: Lead Form */}
-            <div className="lg:col-span-7 bg-[#152820] border border-[#C59B6D]/35 p-8 lg:p-10">
+            <div className="lg:col-span-7 rounded-xl bg-[#152820] border border-[#C59B6D]/35 p-7 sm:p-10 shadow-lg">
               <div className="border-b border-[#F7F5F0]/12 pb-5">
                 <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#C59B6D] block">
                   Mensagem Rápida

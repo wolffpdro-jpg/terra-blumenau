@@ -57,6 +57,11 @@ html {
 }
 
 /* Leaflet Popup & Custom Marker Label Customization */
+.leaflet-container {
+  isolation: isolate !important;
+  z-index: 10 !important;
+}
+
 .leaflet-popup-content-wrapper {
   border-radius: 0px !important;
   background: #f7f5f0 !important;
