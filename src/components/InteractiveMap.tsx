@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import {
   PROPERTY_POLYGON_VERTICES,
   BR470_ROUTE_COORDS,
-  ZONING_ZI1_POLYGON,
   MAP_POIS,
   PROPERTY_SUMMARY,
   MapPOI,
@@ -26,13 +25,20 @@ import {
   ShoppingCart,
   Building2,
   GraduationCap,
+  Trees,
   Truck,
 } from "lucide-react";
 
 type MapStyleMode = "google-hybrid" | "google-satellite" | "google-roadmap";
-type POICategoryFilter = "todos" | "mercado" | "comercio" | "educacao" | "acesso";
+type POICategoryFilter =
+  | "todos"
+  | "parque"
+  | "mercado"
+  | "comercio"
+  | "educacao"
+  | "acesso";
 
-const STORAGE_KEY_POLYGON = "terra_blumenau_calibrated_polygon_v2";
+const STORAGE_KEY_POLYGON = "terra_blumenau_calibrated_polygon_v3";
 
 export default function InteractiveMap() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -44,7 +50,6 @@ export default function InteractiveMap() {
 
   const [mapStyle, setMapStyle] = useState<MapStyleMode>("google-hybrid");
   const [showPerimeter, setShowPerimeter] = useState(true);
-  const [showZoning, setShowZoning] = useState(false);
   const [showPois, setShowPois] = useState(true);
   const [poiFilter, setPoiFilter] = useState<POICategoryFilter>("todos");
   const [selectedPoi, setSelectedPoi] = useState<MapPOI | null>(null);
@@ -93,7 +98,10 @@ export default function InteractiveMap() {
   };
 
   const resetPolygonToDefault = () => {
-    const defaults = PROPERTY_POLYGON_VERTICES.map((v): [number, number] => [v.lat, v.lng]);
+    const defaults = PROPERTY_POLYGON_VERTICES.map((v): [number, number] => [
+      v.lat,
+      v.lng,
+    ]);
     savePolygonCoords(defaults);
     try {
       localStorage.removeItem(STORAGE_KEY_POLYGON);
@@ -131,7 +139,10 @@ export default function InteractiveMap() {
       if (!isMounted || !mapContainerRef.current) return;
 
       const map = L.map(mapContainerRef.current, {
-        center: [PROPERTY_SUMMARY.centerCoordinates.lat, PROPERTY_SUMMARY.centerCoordinates.lng],
+        center: [
+          PROPERTY_SUMMARY.centerCoordinates.lat,
+          PROPERTY_SUMMARY.centerCoordinates.lng,
+        ],
         zoom: 18,
         zoomControl: false,
         scrollWheelZoom: false,
@@ -189,38 +200,12 @@ export default function InteractiveMap() {
     group.clearLayers();
     handlesGroup.clearLayers();
 
-    // 1. Zoning Layers
-    if (showZoning) {
-      L.polygon(polygonCoords, {
-        color: "#6EE7B7",
-        weight: 1.5,
-        dashArray: "6, 6",
-        fillColor: "#1F4E3D",
-        fillOpacity: 0.42,
-      })
-        .bindTooltip("ZOC · Zona de Ocupação Controlada (Lote mín. 500 m²)", {
-          sticky: true,
-        })
-        .addTo(group);
-
-      L.polygon(ZONING_ZI1_POLYGON, {
-        color: "#F59E0B",
-        weight: 2,
-        fillColor: "#C59B6D",
-        fillOpacity: 0.52,
-      })
-        .bindTooltip("ZI-1 · Zona Industrial 1 (Lote mín. 125 m²)", {
-          sticky: true,
-        })
-        .addTo(group);
-    }
-
-    // 2. Property Perimeter, Frontages & 220m BR-470 Route
+    // 1. Property Perimeter, Frontages & 220m BR-470 Route
     if (showPerimeter) {
       // Outer subtle glow
       L.polygon(polygonCoords, {
         color: "#C59B6D",
-        weight: 7,
+        weight: 6,
         opacity: 0.25,
         fill: false,
       }).addTo(group);
@@ -228,10 +213,10 @@ export default function InteractiveMap() {
       // Main 10.361,46 m² Polygon
       L.polygon(polygonCoords, {
         color: "#C59B6D",
-        weight: 3,
+        weight: 2.5,
         opacity: 1,
         fillColor: "#C59B6D",
-        fillOpacity: showZoning ? 0.05 : 0.2,
+        fillOpacity: 0.2,
       }).addTo(group);
 
       // Primary Frontage Highlight: Rua 1º de Janeiro (West edge: P22 -> P23 -> P1 -> P2 -> P3)
@@ -266,29 +251,24 @@ export default function InteractiveMap() {
         })
         .addTo(group);
 
-      // Center Badge (hidden during calibration so it doesn't block dragging)
+      // Center Badge (uses .terra-map-badge with width: max-content so background always fits text)
       if (!isCalibrating) {
         const centerHtml = `
-          <div style="
-            background: rgba(17, 34, 27, 0.92);
-            backdrop-filter: blur(6px);
+          <div class="terra-map-badge" style="
+            background: rgba(17, 34, 27, 0.94);
             border: 1.5px solid #C59B6D;
             color: #F7F5F0;
-            padding: 5px 10px;
+            padding: 4px 10px;
             border-radius: 6px;
             font-family: var(--font-jakarta), sans-serif;
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.45);
-            white-space: nowrap;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.5);
           ">
-            <div style="font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: #C59B6D; font-weight: 700;">
+            <span style="display: block; font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase; color: #C59B6D; font-weight: 700; line-height: 1.2;">
               TERRA / BLUMENAU
-            </div>
-            <div style="font-size: 13px; font-weight: 700; color: #FFFFFF;">
+            </span>
+            <span style="display: block; font-size: 12px; font-weight: 700; color: #FFFFFF; line-height: 1.25; margin-top: 1px;">
               10.361,46 m²
-            </div>
+            </span>
           </div>
         `;
         const centerIcon = L.divIcon({
@@ -297,13 +277,16 @@ export default function InteractiveMap() {
           iconSize: [0, 0],
         });
         L.marker(
-          [PROPERTY_SUMMARY.centerCoordinates.lat, PROPERTY_SUMMARY.centerCoordinates.lng],
+          [
+            PROPERTY_SUMMARY.centerCoordinates.lat,
+            PROPERTY_SUMMARY.centerCoordinates.lng,
+          ],
           { icon: centerIcon, interactive: false }
         ).addTo(group);
       }
     }
 
-    // 3. Calibration Handles (when calibration mode is ON)
+    // 2. Calibration Handles (when calibration mode is ON)
     if (isCalibrating) {
       polygonCoords.forEach(([lat, lng], idx) => {
         const handleHtml = `
@@ -340,12 +323,13 @@ export default function InteractiveMap() {
         marker.on("dragend", (e: any) => {
           const pos = e.target.getLatLng();
           const updated = polygonCoords.map((pt, i): [number, number] =>
-            i === idx ? [Number(pos.lat.toFixed(6)), Number(pos.lng.toFixed(6))] : pt
+            i === idx
+              ? [Number(pos.lat.toFixed(6)), Number(pos.lng.toFixed(6))]
+              : pt
           );
           savePolygonCoords(updated);
         });
 
-        // Right-click a vertex to remove it (if > 4 vertices)
         marker.on("contextmenu", () => {
           if (polygonCoords.length <= 4) return;
           const updated = polygonCoords.filter((_, i) => i !== idx);
@@ -353,13 +337,12 @@ export default function InteractiveMap() {
         });
       });
 
-      // Midpoint "+" handles to insert a new vertex along any edge
       polygonCoords.forEach((pt1, idx) => {
         const pt2 = polygonCoords[(idx + 1) % polygonCoords.length];
         const midLat = (pt1[0] + pt2[0]) / 2;
         const midLng = (pt1[1] + pt2[1]) / 2;
         const dist = Math.hypot(pt1[0] - pt2[0], pt1[1] - pt2[1]);
-        if (dist < 0.00018) return; // only show on longer edges
+        if (dist < 0.00018) return;
 
         const midHtml = `
           <div style="
@@ -383,19 +366,25 @@ export default function InteractiveMap() {
           className: "custom-midpoint-handle",
           iconSize: [0, 0],
         });
-        const midMarker = L.marker([midLat, midLng], { icon: midIcon }).addTo(handlesGroup);
+        const midMarker = L.marker([midLat, midLng], { icon: midIcon }).addTo(
+          handlesGroup
+        );
         midMarker.on("click", () => {
           const next = [...polygonCoords];
-          next.splice(idx + 1, 0, [Number(midLat.toFixed(6)), Number(midLng.toFixed(6))]);
+          next.splice(idx + 1, 0, [
+            Number(midLat.toFixed(6)),
+            Number(midLng.toFixed(6)),
+          ]);
           savePolygonCoords(next);
         });
       });
     }
 
-    // 4. Points of Interest (POIs)
+    // 3. Points of Interest (POIs)
     if (showPois) {
       const categoryColors: Record<MapPOI["category"], string> = {
         acesso: "#C59B6D",
+        parque: "#22C55E",
         mercado: "#34D399",
         comercio: "#F59E0B",
         educacao: "#A78BFA",
@@ -404,42 +393,42 @@ export default function InteractiveMap() {
 
       const filteredPois = MAP_POIS.filter((poi) => {
         if (poiFilter === "todos") return true;
-        if (poiFilter === "acesso") return poi.category === "acesso" || poi.category === "logistica";
+        if (poiFilter === "acesso")
+          return poi.category === "acesso" || poi.category === "logistica";
         return poi.category === poiFilter;
       });
 
       filteredPois.forEach((poi) => {
         const color = categoryColors[poi.category];
         const isSelected = selectedPoi?.id === poi.id;
+        const shortName = poi.name.split("·")[0].split("(")[0].trim();
+        const shortDist = `${poi.distance.split(" ")[0]} ${
+          poi.distance.split(" ")[1] || ""
+        }`.trim();
 
         const markerHtml = `
-          <div style="
-            display: flex;
-            align-items: center;
-            gap: 6px;
+          <div class="terra-poi-pill" style="
             background: ${isSelected ? "#C59B6D" : "rgba(17, 34, 27, 0.94)"};
             color: ${isSelected ? "#11221B" : "#F7F5F0"};
             border: 1.5px solid ${isSelected ? "#FFFFFF" : color};
-            padding: 4px 9px;
+            padding: 3.5px 9px;
             border-radius: 9999px;
             font-family: var(--font-jakarta), sans-serif;
             font-size: 11px;
             font-weight: 600;
-            white-space: nowrap;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.45);
-            cursor: pointer;
-            transform: translate(-50%, -50%);
+            line-height: 1.2;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.45);
           ">
             <span style="
-              width: 8px;
-              height: 8px;
+              width: 7px;
+              height: 7px;
               border-radius: 9999px;
               background: ${isSelected ? "#11221B" : color};
               display: inline-block;
               flex-shrink: 0;
             "></span>
-            <span>${poi.name.split("·")[0].split("(")[0].trim()}</span>
-            <span style="opacity: 0.75; font-size: 10px;">${poi.distance.split(" ")[0]} ${poi.distance.split(" ")[1] || ""}</span>
+            <span style="white-space: nowrap;">${shortName}</span>
+            <span style="opacity: 0.78; font-size: 10px; white-space: nowrap;">${shortDist}</span>
           </div>
         `;
 
@@ -449,7 +438,9 @@ export default function InteractiveMap() {
           iconSize: [0, 0],
         });
 
-        const marker = L.marker([poi.lat, poi.lng], { icon: poiIcon }).addTo(group);
+        const marker = L.marker([poi.lat, poi.lng], { icon: poiIcon }).addTo(
+          group
+        );
         marker.on("click", () => {
           setSelectedPoi(poi);
           map.flyTo([poi.lat, poi.lng], Math.max(map.getZoom(), 16), {
@@ -458,7 +449,16 @@ export default function InteractiveMap() {
         });
       });
     }
-  }, [isLoaded, showPerimeter, showZoning, showPois, poiFilter, selectedPoi, polygonCoords, isCalibrating, savePolygonCoords]);
+  }, [
+    isLoaded,
+    showPerimeter,
+    showPois,
+    poiFilter,
+    selectedPoi,
+    polygonCoords,
+    isCalibrating,
+    savePolygonCoords,
+  ]);
 
   const flyToView = (view: "terreno" | "br470" | "entorno") => {
     const map = mapInstanceRef.current;
@@ -467,7 +467,10 @@ export default function InteractiveMap() {
     if (view === "terreno") {
       setSelectedPoi(null);
       map.flyTo(
-        [PROPERTY_SUMMARY.centerCoordinates.lat, PROPERTY_SUMMARY.centerCoordinates.lng],
+        [
+          PROPERTY_SUMMARY.centerCoordinates.lat,
+          PROPERTY_SUMMARY.centerCoordinates.lng,
+        ],
         18,
         { duration: 0.8 }
       );
@@ -475,7 +478,7 @@ export default function InteractiveMap() {
       map.flyTo([-26.8581, -49.0766], 16, { duration: 0.8 });
     } else {
       setSelectedPoi(null);
-      map.flyTo([-26.8635, -49.0795], 14, { duration: 0.9 });
+      map.flyTo([-26.8635, -49.0775], 14, { duration: 0.9 });
     }
   };
 
@@ -489,166 +492,33 @@ export default function InteractiveMap() {
 
   const filteredPoiList = MAP_POIS.filter((poi) => {
     if (poiFilter === "todos") return true;
-    if (poiFilter === "acesso") return poi.category === "acesso" || poi.category === "logistica";
+    if (poiFilter === "acesso")
+      return poi.category === "acesso" || poi.category === "logistica";
     return poi.category === poiFilter;
   });
 
   return (
-    <div className="space-y-4">
-      {/* Compact Top Control Bar (Replaces the bulky left sidebar card) */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#152820]/12 bg-white p-3 shadow-sm">
-        {/* Left: Quick Camera Presets */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          <button
-            type="button"
-            onClick={() => flyToView("terreno")}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-[#152820] px-3 py-1.5 text-xs font-semibold text-[#F7F5F0] transition hover:bg-[#1E3A2F]"
-          >
-            <Maximize2 className="h-3.5 w-3.5 text-[#C59B6D]" />
-            Focar Terreno
-          </button>
-          <button
-            type="button"
-            onClick={() => flyToView("br470")}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-[#152820]/15 bg-[#F7F5F0] px-3 py-1.5 text-xs font-medium text-[#152820] transition hover:border-[#C59B6D]"
-          >
-            <Navigation className="h-3.5 w-3.5 text-[#0284C7]" />
-            Rota 220m BR-470
-          </button>
-          <button
-            type="button"
-            onClick={() => flyToView("entorno")}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-[#152820]/15 bg-[#F7F5F0] px-3 py-1.5 text-xs font-medium text-[#152820] transition hover:border-[#C59B6D]"
-          >
-            <Compass className="h-3.5 w-3.5 text-[#8C6239]" />
-            Ver Região Norte (Mercados & Faculdades)
-          </button>
-        </div>
-
-        {/* Center: Compact Layer Pills */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          <button
-            type="button"
-            onClick={() => setShowPerimeter(!showPerimeter)}
-            className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition ${
-              showPerimeter
-                ? "border-[#C59B6D]/50 bg-[#C59B6D]/12 text-[#152820]"
-                : "border-[#152820]/12 bg-white text-[#152820]/50"
-            }`}
-          >
-            {showPerimeter ? <Eye className="h-3.5 w-3.5 text-[#8C6239]" /> : <EyeOff className="h-3.5 w-3.5" />}
-            Limites (10.361 m²)
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setShowZoning(!showZoning)}
-            className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition ${
-              showZoning
-                ? "border-[#C59B6D]/50 bg-[#C59B6D]/12 text-[#152820]"
-                : "border-[#152820]/12 bg-white text-[#152820]/50"
-            }`}
-          >
-            {showZoning ? <Eye className="h-3.5 w-3.5 text-[#8C6239]" /> : <EyeOff className="h-3.5 w-3.5" />}
-            Zoneamento (ZI-1 / ZOC)
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setShowPois(!showPois)}
-            className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition ${
-              showPois
-                ? "border-[#C59B6D]/50 bg-[#C59B6D]/12 text-[#152820]"
-                : "border-[#152820]/12 bg-white text-[#152820]/50"
-            }`}
-          >
-            {showPois ? <Eye className="h-3.5 w-3.5 text-[#8C6239]" /> : <EyeOff className="h-3.5 w-3.5" />}
-            Pontos Próximos ({MAP_POIS.length})
-          </button>
-
-          {/* Calibration Mode Toggle */}
-          <button
-            type="button"
-            onClick={() => {
-              const next = !isCalibrating;
-              setIsCalibrating(next);
-              if (next) flyToView("terreno");
-            }}
-            className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-semibold transition ${
-              isCalibrating
-                ? "border-amber-500 bg-amber-500 text-[#11221B] shadow-sm"
-                : "border-amber-500/40 bg-amber-500/10 text-[#8C6239] hover:bg-amber-500/20"
-            }`}
-            title="Ferramenta para ajustar manualmente os vértices do terreno sobre a foto de satélite"
-          >
-            <Sliders className="h-3.5 w-3.5" />
-            {isCalibrating ? "Fechar Ajuste de Polígono" : "Ajustar Polígono"}
-          </button>
-        </div>
-
-        {/* Right: Map Base Style */}
-        <div className="inline-flex rounded-lg border border-[#152820]/15 bg-[#F7F5F0] p-0.5">
-          <button
-            type="button"
-            onClick={() => setMapStyle("google-hybrid")}
-            className={`rounded-md px-2.5 py-1 text-xs font-medium transition ${
-              mapStyle === "google-hybrid"
-                ? "bg-[#152820] text-[#F7F5F0]"
-                : "text-[#152820]/70 hover:text-[#152820]"
-            }`}
-          >
-            Híbrido
-          </button>
-          <button
-            type="button"
-            onClick={() => setMapStyle("google-satellite")}
-            className={`rounded-md px-2.5 py-1 text-xs font-medium transition ${
-              mapStyle === "google-satellite"
-                ? "bg-[#152820] text-[#F7F5F0]"
-                : "text-[#152820]/70 hover:text-[#152820]"
-            }`}
-          >
-            Satélite
-          </button>
-          <button
-            type="button"
-            onClick={() => setMapStyle("google-roadmap")}
-            className={`rounded-md px-2.5 py-1 text-xs font-medium transition ${
-              mapStyle === "google-roadmap"
-                ? "bg-[#152820] text-[#F7F5F0]"
-                : "text-[#152820]/70 hover:text-[#152820]"
-            }`}
-          >
-            Mapa
-          </button>
-        </div>
-      </div>
-
-      {/* Interactive Calibration Toolbar (Only visible when user clicks "Ajustar Polígono") */}
+    <div className="space-y-3">
+      {/* Calibration Toolbar (Only visible when user clicks "Ajustar Polígono") */}
       {isCalibrating && (
-        <div className="rounded-xl border-2 border-amber-500/60 bg-[#152820] p-4 text-[#F7F5F0] shadow-lg">
-          <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="rounded-xl border-2 border-amber-500/60 bg-[#152820] p-3.5 text-[#F7F5F0] shadow-lg">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <div className="flex items-center gap-2">
-                <span className="inline-block h-2 w-2 rounded-full bg-amber-400" />
-                <p className="text-xs font-bold uppercase tracking-wider text-amber-400">
-                  Ferramenta de Calibração dos Limites no Satélite
-                </p>
-              </div>
-              <p className="mt-1 text-xs text-[#E6DFD3]/85">
-                Arraste qualquer ponto numerado <strong>(1 a {polygonCoords.length})</strong> diretamente no mapa abaixo, clique em <strong>+</strong> para criar um novo vértice, ou clique com o botão direito em um ponto para removê-lo.
+              <p className="text-xs font-bold uppercase tracking-wider text-amber-400">
+                Ajuste Manual dos Vértices ({polygonCoords.length} pontos)
+              </p>
+              <p className="mt-0.5 text-xs text-[#E6DFD3]/85">
+                Arraste qualquer ponto no mapa, clique em <strong>+</strong> para
+                adicionar ou com o botão direito para remover.
               </p>
             </div>
 
-            {/* Whole-polygon directional nudge buttons */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[11px] text-[#E6DFD3]/70">Mover tudo (1m):</span>
               <div className="inline-flex items-center gap-1 rounded-lg border border-white/15 bg-white/5 p-1">
                 <button
                   type="button"
                   onClick={() => nudgePolygon(1, 0)}
                   className="inline-flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-white/15"
-                  title="Mover 1 metro para o Norte"
                 >
                   <ArrowUp className="h-3.5 w-3.5 text-amber-400" /> Norte
                 </button>
@@ -656,7 +526,6 @@ export default function InteractiveMap() {
                   type="button"
                   onClick={() => nudgePolygon(-1, 0)}
                   className="inline-flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-white/15"
-                  title="Mover 1 metro para o Sul"
                 >
                   <ArrowDown className="h-3.5 w-3.5 text-amber-400" /> Sul
                 </button>
@@ -664,7 +533,6 @@ export default function InteractiveMap() {
                   type="button"
                   onClick={() => nudgePolygon(0, -1)}
                   className="inline-flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-white/15"
-                  title="Mover 1 metro para o Oeste"
                 >
                   <ArrowLeft className="h-3.5 w-3.5 text-amber-400" /> Oeste
                 </button>
@@ -672,7 +540,6 @@ export default function InteractiveMap() {
                   type="button"
                   onClick={() => nudgePolygon(0, 1)}
                   className="inline-flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-white/15"
-                  title="Mover 1 metro para o Leste"
                 >
                   <ArrowRight className="h-3.5 w-3.5 text-amber-400" /> Leste
                 </button>
@@ -681,26 +548,26 @@ export default function InteractiveMap() {
               <button
                 type="button"
                 onClick={resetPolygonToDefault}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-white/20 bg-white/5 px-3 py-1.5 text-xs font-medium text-[#E6DFD3] transition hover:bg-white/15"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-white/20 bg-white/5 px-2.5 py-1.5 text-xs font-medium text-[#E6DFD3] hover:bg-white/15"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
-                Restaurar Original
+                Padrão
               </button>
 
               <button
                 type="button"
                 onClick={copyPolygonToClipboard}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-amber-400 px-3.5 py-1.5 text-xs font-bold text-[#11221B] transition hover:bg-amber-300"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-amber-400 px-3 py-1.5 text-xs font-bold text-[#11221B] hover:bg-amber-300"
               >
                 {copiedJson ? (
                   <>
                     <Check className="h-3.5 w-3.5" />
-                    Coordenadas Copiadas! Cole no Chat
+                    Copiado!
                   </>
                 ) : (
                   <>
                     <Copy className="h-3.5 w-3.5" />
-                    Copiar Coordenadas Ajustadas
+                    Copiar Coordenadas
                   </>
                 )}
               </button>
@@ -709,112 +576,241 @@ export default function InteractiveMap() {
         </div>
       )}
 
-      {/* Full-Width 2D Google Maps Container */}
-      <div className="relative h-[540px] lg:h-[620px] w-full overflow-hidden rounded-2xl border border-[#152820]/15 bg-[#0F1F18] shadow-xl">
-        <div ref={mapContainerRef} className="h-full w-full" />
+      {/* Side-by-Side Ergonomic Layout on Desktop / Compact Stack on Mobile */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+        {/* Left Column (7 cols): Compact 2D Google Map */}
+        <div className="lg:col-span-7 relative h-[310px] sm:h-[370px] lg:h-[450px] w-full overflow-hidden rounded-xl border border-[#C59B6D]/30 bg-[#0F1F18] shadow-lg">
+          <div ref={mapContainerRef} className="h-full w-full" />
 
-        {/* Selected POI Floating Card inside Map (Bottom-Left) */}
-        {selectedPoi && (
-          <div className="absolute bottom-4 left-4 right-14 sm:right-auto sm:max-w-md z-[500] rounded-xl border border-[#C59B6D]/50 bg-[#11221B]/95 p-4 text-[#F7F5F0] backdrop-blur-md shadow-2xl">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[#C59B6D]">
-                  {selectedPoi.categoryLabel} · {selectedPoi.distance} ({selectedPoi.travelTime})
-                </span>
-                <h5 className="mt-0.5 text-sm font-semibold text-white">{selectedPoi.name}</h5>
-              </div>
+          {/* Floating Map Type Switcher (Top-Left inside Map) */}
+          <div className="absolute top-3 left-3 z-[400] inline-flex rounded-lg border border-[#C59B6D]/40 bg-[#11221B]/90 p-0.5 backdrop-blur-md shadow-md">
+            {(
+              [
+                { id: "google-hybrid", label: "Híbrido" },
+                { id: "google-satellite", label: "Satélite" },
+                { id: "google-roadmap", label: "Mapa" },
+              ] as const
+            ).map((mode) => (
               <button
+                key={mode.id}
                 type="button"
-                onClick={() => setSelectedPoi(null)}
-                className="rounded px-2 py-0.5 text-xs text-[#E6DFD3]/60 hover:bg-white/10 hover:text-white"
+                onClick={() => setMapStyle(mode.id)}
+                className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition cursor-pointer ${
+                  mapStyle === mode.id
+                    ? "bg-[#C59B6D] text-[#11221B] font-bold"
+                    : "text-[#E6DFD3]/85 hover:text-white"
+                }`}
               >
-                ✕
+                {mode.label}
               </button>
-            </div>
-            <p className="mt-1.5 text-xs leading-relaxed text-[#E6DFD3]/85">
-              {selectedPoi.description}
-            </p>
+            ))}
           </div>
-        )}
-      </div>
 
-      {/* Compact POI Filter & Quick-Jump Strip Below Map */}
-      <div className="rounded-xl border border-[#152820]/12 bg-white p-3.5 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#152820]/10 pb-2.5">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#152820]">
-            Pontos de Referência Próximos (Clique para localizar no mapa)
-          </span>
-          <div className="flex flex-wrap items-center gap-1">
-            {[
-              { id: "todos", label: "Todos", icon: null },
-              { id: "mercado", label: "Mercados & Atacados", icon: ShoppingCart },
-              { id: "comercio", label: "Shoppings & Centros Comerciais", icon: Building2 },
-              { id: "educacao", label: "Faculdades & Saúde", icon: GraduationCap },
-              { id: "acesso", label: "Acessos & Terminais", icon: Truck },
-            ].map((tab) => {
-              const Icon = tab.icon;
-              const active = poiFilter === tab.id;
-              return (
+          {/* Discreet Calibration Button (Top-Right inside Map) */}
+          <div className="absolute top-3 right-3 z-[400]">
+            <button
+              type="button"
+              onClick={() => {
+                const next = !isCalibrating;
+                setIsCalibrating(next);
+                if (next) flyToView("terreno");
+              }}
+              className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-[11px] font-semibold backdrop-blur-md transition cursor-pointer shadow-md ${
+                isCalibrating
+                  ? "border-amber-400 bg-amber-400 text-[#11221B]"
+                  : "border-[#C59B6D]/40 bg-[#11221B]/85 text-[#E6DFD3] hover:border-[#C59B6D]"
+              }`}
+              title="Ajustar manualmente os pontos do polígono"
+            >
+              <Sliders className="h-3 w-3 text-[#C59B6D]" />
+              <span>{isCalibrating ? "Fechar Ajuste" : "Ajustar Polígono"}</span>
+            </button>
+          </div>
+
+          {/* Selected POI Floating Card inside Map (Bottom-Left) */}
+          {selectedPoi && (
+            <div className="absolute bottom-3 left-3 right-12 sm:right-auto sm:max-w-sm z-[400] rounded-lg border border-[#C59B6D]/60 bg-[#11221B]/95 p-3 text-[#F7F5F0] backdrop-blur-md shadow-xl">
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#C59B6D]">
+                    {selectedPoi.categoryLabel} · {selectedPoi.distance} (
+                    {selectedPoi.travelTime})
+                  </span>
+                  <h5 className="mt-0.5 text-xs sm:text-sm font-semibold text-white">
+                    {selectedPoi.name}
+                  </h5>
+                </div>
                 <button
-                  key={tab.id}
                   type="button"
-                  onClick={() => setPoiFilter(tab.id as POICategoryFilter)}
-                  className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition ${
-                    active
-                      ? "bg-[#152820] text-[#F7F5F0]"
-                      : "bg-[#F7F5F0] text-[#152820]/75 hover:bg-[#E6DFD3]/60"
+                  onClick={() => setSelectedPoi(null)}
+                  className="rounded px-1.5 py-0.5 text-xs text-[#E6DFD3]/70 hover:bg-white/10 hover:text-white cursor-pointer"
+                >
+                  ✕
+                </button>
+              </div>
+              <p className="mt-1 text-[11px] leading-relaxed text-[#E6DFD3]/85">
+                {selectedPoi.description}
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Right Column (5 cols): Unified Camera Views + Category Filters + Scrollable POI List */}
+        <div className="lg:col-span-5 flex flex-col justify-between rounded-xl border border-[#152820]/15 bg-white p-3.5 text-[#152820] shadow-lg lg:h-[450px]">
+          {/* 1. Aggregated Quick Camera & Layer Controls */}
+          <div className="border-b border-[#152820]/10 pb-2.5">
+            <div className="flex items-center justify-between gap-2 mb-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#8C6239]">
+                Atalhos de Visualização
+              </span>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => setShowPerimeter(!showPerimeter)}
+                  className={`inline-flex items-center gap-1 rounded px-2 py-0.5 text-[11px] font-medium border transition cursor-pointer ${
+                    showPerimeter
+                      ? "border-[#C59B6D]/60 bg-[#C59B6D]/15 text-[#152820]"
+                      : "border-[#152820]/15 text-[#152820]/50"
                   }`}
                 >
-                  {Icon && <Icon className="h-3 w-3 text-[#C59B6D]" />}
-                  {tab.label}
+                  {showPerimeter ? (
+                    <Eye className="h-3 w-3 text-[#8C6239]" />
+                  ) : (
+                    <EyeOff className="h-3 w-3" />
+                  )}
+                  Limites
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowPois(!showPois)}
+                  className={`inline-flex items-center gap-1 rounded px-2 py-0.5 text-[11px] font-medium border transition cursor-pointer ${
+                    showPois
+                      ? "border-[#C59B6D]/60 bg-[#C59B6D]/15 text-[#152820]"
+                      : "border-[#152820]/15 text-[#152820]/50"
+                  }`}
+                >
+                  {showPois ? (
+                    <Eye className="h-3 w-3 text-[#8C6239]" />
+                  ) : (
+                    <EyeOff className="h-3 w-3" />
+                  )}
+                  Pontos ({MAP_POIS.length})
+                </button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-1.5">
+              <button
+                type="button"
+                onClick={() => flyToView("terreno")}
+                className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#152820] px-2.5 py-1.5 text-[11px] font-semibold text-[#F7F5F0] transition hover:bg-[#1E3A2F] cursor-pointer"
+              >
+                <Maximize2 className="h-3 w-3 text-[#C59B6D] shrink-0" />
+                <span className="truncate">Focar Terreno</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => flyToView("br470")}
+                className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-[#152820]/15 bg-[#F7F5F0] px-2.5 py-1.5 text-[11px] font-medium text-[#152820] transition hover:border-[#C59B6D] cursor-pointer"
+              >
+                <Navigation className="h-3 w-3 text-[#0284C7] shrink-0" />
+                <span className="truncate">Rota 220m BR</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => flyToView("entorno")}
+                className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-[#152820]/15 bg-[#F7F5F0] px-2.5 py-1.5 text-[11px] font-medium text-[#152820] transition hover:border-[#C59B6D] cursor-pointer"
+              >
+                <Compass className="h-3 w-3 text-[#8C6239] shrink-0" />
+                <span className="truncate">Ver Região</span>
+              </button>
+            </div>
+          </div>
+
+          {/* 2. Category Filter Tabs */}
+          <div className="py-2.5 border-b border-[#152820]/10">
+            <span className="block text-[11px] font-bold uppercase tracking-wider text-[#152820] mb-1.5">
+              Pontos de Referência Próximos ({filteredPoiList.length})
+            </span>
+            <div className="flex flex-wrap gap-1">
+              {[
+                { id: "todos", label: "Todos", icon: null },
+                { id: "parque", label: "Parques (≤3km)", icon: Trees },
+                { id: "mercado", label: "Mercados", icon: ShoppingCart },
+                { id: "comercio", label: "Shoppings", icon: Building2 },
+                { id: "educacao", label: "Faculdades", icon: GraduationCap },
+                { id: "acesso", label: "Acessos", icon: Truck },
+              ].map((tab) => {
+                const Icon = tab.icon;
+                const active = poiFilter === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => setPoiFilter(tab.id as POICategoryFilter)}
+                    className={`inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium transition cursor-pointer ${
+                      active
+                        ? "bg-[#152820] text-[#F7F5F0]"
+                        : "bg-[#F7F5F0] text-[#152820]/75 hover:bg-[#E6DFD3]/70"
+                    }`}
+                  >
+                    {Icon && <Icon className="h-3 w-3 text-[#C59B6D]" />}
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* 3. Compact Scrollable List of POIs */}
+          <div className="mt-2 flex-1 overflow-y-auto pr-1 space-y-1.5 max-h-[210px] lg:max-h-none">
+            {filteredPoiList.map((poi) => {
+              const isSelected = selectedPoi?.id === poi.id;
+              const dotColor =
+                poi.category === "parque"
+                  ? "bg-green-500"
+                  : poi.category === "mercado"
+                  ? "bg-emerald-500"
+                  : poi.category === "comercio"
+                  ? "bg-amber-500"
+                  : poi.category === "educacao"
+                  ? "bg-purple-500"
+                  : poi.category === "logistica"
+                  ? "bg-sky-500"
+                  : "bg-[#C59B6D]";
+
+              return (
+                <button
+                  key={poi.id}
+                  type="button"
+                  onClick={() => focusPoi(poi)}
+                  className={`w-full flex items-center justify-between gap-2 rounded-lg border px-2.5 py-2 text-left transition cursor-pointer ${
+                    isSelected
+                      ? "border-[#C59B6D] bg-[#152820] text-[#F7F5F0]"
+                      : "border-[#152820]/10 bg-[#F7F5F0]/60 text-[#152820] hover:border-[#C59B6D]/50 hover:bg-[#F7F5F0]"
+                  }`}
+                >
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span
+                      className={`h-2 w-2 flex-shrink-0 rounded-full ${dotColor}`}
+                    />
+                    <span className="truncate text-xs font-semibold">
+                      {poi.name}
+                    </span>
+                  </div>
+                  <span
+                    className={`flex-shrink-0 rounded px-1.5 py-0.5 font-mono text-[10px] ${
+                      isSelected
+                        ? "bg-[#C59B6D]/20 text-[#C59B6D]"
+                        : "bg-[#152820]/5 text-[#8C6239]"
+                    }`}
+                  >
+                    {poi.distance}
+                  </span>
                 </button>
               );
             })}
           </div>
-        </div>
-
-        {/* Horizontal Scrollable / Grid Pills of POIs */}
-        <div className="mt-2.5 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {filteredPoiList.map((poi) => {
-            const isSelected = selectedPoi?.id === poi.id;
-            const dotColor =
-              poi.category === "mercado"
-                ? "bg-emerald-500"
-                : poi.category === "comercio"
-                ? "bg-amber-500"
-                : poi.category === "educacao"
-                ? "bg-purple-500"
-                : poi.category === "logistica"
-                ? "bg-sky-500"
-                : "bg-[#C59B6D]";
-
-            return (
-              <button
-                key={poi.id}
-                type="button"
-                onClick={() => focusPoi(poi)}
-                className={`flex items-center justify-between gap-2 rounded-lg border px-3 py-2 text-left transition ${
-                  isSelected
-                    ? "border-[#C59B6D] bg-[#152820] text-[#F7F5F0]"
-                    : "border-[#152820]/10 bg-[#F7F5F0]/60 text-[#152820] hover:border-[#C59B6D]/50 hover:bg-[#F7F5F0]"
-                }`}
-              >
-                <div className="flex items-center gap-2 min-w-0">
-                  <span className={`h-2 w-2 shrink-0 rounded-full ${dotColor}`} />
-                  <span className="truncate text-xs font-medium">{poi.name}</span>
-                </div>
-                <span
-                  className={`shrink-0 rounded px-1.5 py-0.5 font-mono text-[10px] ${
-                    isSelected
-                      ? "bg-[#C59B6D]/20 text-[#C59B6D]"
-                      : "bg-[#152820]/8 text-[#8C6239]"
-                  }`}
-                >
-                  {poi.distance}
-                </span>
-              </button>
-            );
-          })}
         </div>
       </div>
     </div>

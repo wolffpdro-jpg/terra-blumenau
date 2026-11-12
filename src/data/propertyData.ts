@@ -18,7 +18,7 @@ export interface BoundarySegment {
 export interface MapPOI {
   id: string;
   name: string;
-  category: "acesso" | "mercado" | "comercio" | "educacao" | "logistica";
+  category: "acesso" | "mercado" | "comercio" | "educacao" | "parque" | "logistica";
   categoryLabel: string;
   lat: number;
   lng: number;
@@ -114,7 +114,7 @@ export const PROPERTY_SUMMARY = {
 
 /**
  * Exact georeferenced vertices of the 10.361,46 m² property polygon
- * Extracted directly from the AutoCAD vector stream of 579_PLANTA_PLANIALT_WOLFF_A2_V1.pdf (SIRGAS 2000 / UTM 22S)
+ * Calibrated directly over Google Satellite imagery
  */
 export const PROPERTY_POLYGON_VERTICES: Coordinate[] = [
   { lat: -26.856627, lng: -49.076316, utmE: 691121.52, utmN: 7027994.68, label: "P1 · R. 1º de Janeiro (Início Esquina)" },
@@ -122,8 +122,8 @@ export const PROPERTY_POLYGON_VERTICES: Coordinate[] = [
   { lat: -26.856578, lng: -49.076240, utmE: 691129.16, utmN: 7027999.98, label: "P3 · Esquina R. Frieda Beck" },
   { lat: -26.856649, lng: -49.075920, utmE: 691160.84, utmN: 7027991.65, label: "P4 · R. Frieda Beck (32,74m)" },
   { lat: -26.856729, lng: -49.075678, utmE: 691184.78, utmN: 7027982.43, label: "P5 · R. Frieda Beck (25,65m)" },
-  { lat: -26.856995, lng: -49.075868, utmE: 691165.43, utmN: 7027953.27, label: "P6 · Recorte Ewaldo Mund Oeste (35,00m)" },
-  { lat: -26.857106, lng: -49.075593, utmE: 691192.57, utmN: 7027940.52, label: "P7 · Recorte Ewaldo Mund Sul (30,00m)" },
+  { lat: -26.856954, lng: -49.075812, utmE: 691165.43, utmN: 7027953.27, label: "P6 · Recorte Ewaldo Mund Oeste (35,00m)" },
+  { lat: -26.857081, lng: -49.075563, utmE: 691192.57, utmN: 7027940.52, label: "P7 · Recorte Ewaldo Mund Sul (30,00m)" },
   { lat: -26.856838, lng: -49.075406, utmE: 691211.59, utmN: 7027969.90, label: "P8 · Retorno R. Frieda Beck (35,00m)" },
   { lat: -26.856889, lng: -49.075333, utmE: 691218.72, utmN: 7027964.21, label: "P9 · R. Frieda Beck (9,12m)" },
   { lat: -26.856954, lng: -49.075272, utmE: 691224.74, utmN: 7027956.89, label: "P10 · R. Frieda Beck (9,48m)" },
@@ -136,8 +136,8 @@ export const PROPERTY_POLYGON_VERTICES: Coordinate[] = [
   { lat: -26.857702, lng: -49.075041, utmE: 691246.38, utmN: 7027873.61, label: "P17 · R. Frieda Beck (12,92m)" },
   { lat: -26.857787, lng: -49.074984, utmE: 691251.93, utmN: 7027864.21, label: "P18 · R. Frieda Beck (10,93m)" },
   { lat: -26.857822, lng: -49.074933, utmE: 691256.94, utmN: 7027860.18, label: "P19 · Extremo Sudeste R. Frieda Beck (6,41m)" },
-  { lat: -26.857759, lng: -49.075974, utmE: 691153.65, utmN: 7027868.72, label: "P20 · Divisa Sul JE Comércio (103,64m)" },
-  { lat: -26.857280, lng: -49.075796, utmE: 691172.13, utmN: 7027921.52, label: "P21 · Divisa Ademir Goldacker Leste (55,94m)" },
+  { lat: -26.857765, lng: -49.075849, utmE: 691153.65, utmN: 7027868.72, label: "P20 · Divisa Sul JE Comércio (103,64m)" },
+  { lat: -26.857306, lng: -49.075689, utmE: 691172.13, utmN: 7027921.52, label: "P21 · Divisa Ademir Goldacker Leste (55,94m)" },
   { lat: -26.857233, lng: -49.076386, utmE: 691113.55, utmN: 7027927.66, label: "P22 · Divisa Ademir Goldacker Norte (58,59m)" },
   { lat: -26.857052, lng: -49.076352, utmE: 691117.24, utmN: 7027947.60, label: "P23 · R. 1º de Janeiro (20,29m)" },
 ];
@@ -389,6 +389,68 @@ export const MAP_POIS: MapPOI[] = [
     travelTime: "7 min",
     description:
       "Centro Tecnológico e de Engenharias da FURB e Instituto Gene de Inovação na Rua São Paulo.",
+  },
+
+  // Parques Públicos & Praças Municipais (Raio até 3 km)
+  {
+    id: "parque-das-itoupavas",
+    name: "Parque das Itoupavas (Parque Alcântaro Corrêa)",
+    category: "parque",
+    categoryLabel: "Parque Público Municipal",
+    lat: -26.860171,
+    lng: -49.082002,
+    distance: "700 m",
+    travelTime: "1 min",
+    description:
+      "Principal parque público da Região Norte de Blumenau (mais de 14.000 m²), na Rua 1º de Janeiro junto à BR-470, com ciclovia, pista de caminhada, quadras, playground e pet place.",
+  },
+  {
+    id: "praca-renato-luiz-maba",
+    name: "Praça Pública Renato Luiz Maba (Fidélis)",
+    category: "parque",
+    categoryLabel: "Praça & Lazer Público",
+    lat: -26.848187,
+    lng: -49.075546,
+    distance: "1,0 km",
+    travelTime: "2 min",
+    description:
+      "Praça municipal no próprio Bairro Fidélis com quadra poliesportiva iluminada, playground infantil e área de convivência.",
+  },
+  {
+    id: "praca-eugen-pawlowsky",
+    name: "Praça Pública Eugen Pawlowsky (Itoupava Norte)",
+    category: "parque",
+    categoryLabel: "Praça & Lazer Público",
+    lat: -26.875590,
+    lng: -49.084730,
+    distance: "2,2 km",
+    travelTime: "4 min",
+    description:
+      "Espaço público arborizado de lazer e convivência comunitária na região da Itoupava Norte.",
+  },
+  {
+    id: "praca-tio-duda",
+    name: "Praça Pública Tio Duda (Fortaleza Alta)",
+    category: "parque",
+    categoryLabel: "Praça & Lazer Público",
+    lat: -26.861450,
+    lng: -49.051288,
+    distance: "2,5 km",
+    travelTime: "4 min",
+    description:
+      "Praça pública municipal situada na região da Fortaleza Alta, com área verde e equipamentos de lazer.",
+  },
+  {
+    id: "praca-bruxelas",
+    name: "Praça Pública Bruxelas (Itoupava Norte)",
+    category: "parque",
+    categoryLabel: "Praça & Lazer Público",
+    lat: -26.884034,
+    lng: -49.077825,
+    distance: "2,9 km",
+    travelTime: "5 min",
+    description:
+      "Praça pública com quadra esportiva de areia iluminada, playground e área de lazer familiar.",
   },
 
   // Terminais & Infraestrutura Regional

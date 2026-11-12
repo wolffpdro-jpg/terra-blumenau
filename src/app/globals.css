@@ -56,7 +56,7 @@ html {
   background: #c59b6d;
 }
 
-/* Leaflet Popup Customization */
+/* Leaflet Popup & Custom Marker Label Customization */
 .leaflet-popup-content-wrapper {
   border-radius: 0px !important;
   background: #f7f5f0 !important;
@@ -66,6 +66,40 @@ html {
 
 .leaflet-popup-tip {
   background: #f7f5f0 !important;
+}
+
+.custom-leaflet-div-icon,
+.custom-poi-div-icon,
+.custom-calibrate-handle,
+.custom-midpoint-handle {
+  background: transparent !important;
+  border: none !important;
+  overflow: visible !important;
+}
+
+.terra-map-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: max-content !important;
+  min-width: max-content !important;
+  white-space: nowrap !important;
+  box-sizing: border-box;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.terra-poi-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: max-content !important;
+  min-width: max-content !important;
+  white-space: nowrap !important;
+  box-sizing: border-box;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
 }
 
 @media print {
