@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "leaflet/dist/leaflet.css";
-@import "maplibre-gl/dist/maplibre-gl.css";
 
 @theme inline {
   --font-serif: var(--font-cormorant), Georgia, Cambria, "Times New Roman", Times, serif;
@@ -9,6 +8,9 @@
 }
 
 :root {
+  --font-cormorant: "Cormorant Garamond", Georgia, serif;
+  --font-jakarta: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-jetbrains: "JetBrains Mono", monospace;
   --terra-green: #11221b;
   --terra-green-mid: #182e25;
   --terra-sand: #e6dfd3;
